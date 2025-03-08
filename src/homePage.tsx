@@ -35,7 +35,7 @@ import {
   AttachMoney,
 } from "@mui/icons-material"
 
-import ResponsiveAppBar from './components/header.tsx'
+
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -77,7 +77,7 @@ export default function HomePage() {
   return (
     
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <ResponsiveAppBar/> 
+
       <Grid container spacing={3}>
         <Grid item xs={12} lg={8}>
           <Box

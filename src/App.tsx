@@ -6,6 +6,7 @@ import LoginPage from './loginPage';
 import HomePage from './homePage';
 import ConfirmUserPage from './confirmUserPage';
 import './App.css'
+import MainLayout from "./layout/ mainLayout";
 
 const App = () => {
   const isAuthenticated = () => {
@@ -15,6 +16,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    <MainLayout>
       <Routes>
         <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="*" element={<Navigate to="/home" replace={true} />}
     />
       </Routes>
+    </MainLayout>
     </BrowserRouter>
   );
 };
