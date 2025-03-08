@@ -1,22 +1,24 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { CognitoIdentityProviderClient, InitiateAuthCommand, SignUpCommand, ConfirmSignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
-import config from "./config.json";
+import { CognitoIdentityProviderClient, InitiateAuthCommand, SignUpCommand, ConfirmSignUpCommand, InitiateAuthCommandInput } from "@aws-sdk/client-cognito-identity-provider";
+
+const region = import.meta.env.VITE_APP_REGION;
+const clientId = import.meta.env.VITE_APP_CLIENT_ID;
 
 export const cognitoClient = new CognitoIdentityProviderClient({
-  region: config.region,
+  region: region,
 });
 
 export const signIn = async (username: string, password: string) => {
   const params = {
     AuthFlow: "USER_PASSWORD_AUTH",
-    ClientId: config.clientId,
+    ClientId: clientId,
     AuthParameters: {
       USERNAME: username,
       PASSWORD: password,
     },
-  };
+  } as InitiateAuthCommandInput;
   try {
     const command = new InitiateAuthCommand(params);
     const { AuthenticationResult } = await cognitoClient.send(command);
@@ -34,7 +36,7 @@ export const signIn = async (username: string, password: string) => {
 
 export const signUp = async (email: string, password: string) => {
   const params = {
-    ClientId: config.clientId,
+    ClientId: clientId,
     Username: email,
     Password: password,
     UserAttributes: [
@@ -57,7 +59,7 @@ export const signUp = async (email: string, password: string) => {
 
 export const confirmSignUp = async (username: string, code: string) => {
   const params = {
-    ClientId: config.clientId,
+    ClientId: clientId,
     Username: username,
     ConfirmationCode: code,
   };
@@ -68,6 +70,18 @@ export const confirmSignUp = async (username: string, code: string) => {
     return true;
   } catch (error) {
     console.error("Error confirming sign up: ", error);
+    throw error;
+  }
+};
+
+export const signOut = async () => {
+  try {
+    sessionStorage.removeItem("idToken");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    console.log("User signed out successfully");
+  } catch (error) {
+    console.error("Error signing out: ", error);
     throw error;
   }
 };
