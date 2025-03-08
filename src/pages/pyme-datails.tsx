@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -24,7 +24,7 @@ import {
   Tabs,
   Typography,
   useTheme,
-} from "@mui/material"
+} from "@mui/material";
 import {
   ArrowBack,
   Business,
@@ -37,8 +37,7 @@ import {
   ShoppingCart,
   Verified,
   WhatsApp,
-} from "@mui/icons-material"
-
+} from "@mui/icons-material";
 
 // Datos de ejemplo de pymes en el sector médico (extendido con más información)
 const pymesMedicas = [
@@ -62,7 +61,10 @@ const pymesMedicas = [
     horario: "Lunes a Viernes: 8:00 - 20:00, Sábados: 9:00 - 14:00",
     fundacion: 1985,
     empleados: "50-100",
-    certificaciones: ["Certificación ISO 9001", "Consejo de Salubridad General"],
+    certificaciones: [
+      "Certificación ISO 9001",
+      "Consejo de Salubridad General",
+    ],
     redesSociales: {
       facebook: "clinicasanrafael",
       instagram: "clinica_sanrafael",
@@ -96,7 +98,10 @@ const pymesMedicas = [
     horario: "Lunes a Sábado: 7:00 - 19:00, Domingos: 8:00 - 13:00",
     fundacion: 1998,
     empleados: "100-250",
-    certificaciones: ["Certificación ISO 15189", "College of American Pathologists (CAP)"],
+    certificaciones: [
+      "Certificación ISO 15189",
+      "College of American Pathologists (CAP)",
+    ],
     redesSociales: {
       facebook: "labmedicosesp",
       instagram: "labmedicos_mx",
@@ -110,7 +115,7 @@ const pymesMedicas = [
       "/placeholder.svg?height=200&width=300",
     ],
   },
-]
+];
 
 // Datos de productos por PyME
 const productosPorPyme = {
@@ -210,7 +215,8 @@ const productosPorPyme = {
       imagen: "/placeholder.svg?height=200&width=300",
       categoria: "Análisis Hormonales",
       disponibilidad: "48 horas",
-      preparacion: "Ayuno de 8 horas, idealmente entre el día 3-5 del ciclo menstrual",
+      preparacion:
+        "Ayuno de 8 horas, idealmente entre el día 3-5 del ciclo menstrual",
       destacado: true,
     },
     {
@@ -262,16 +268,16 @@ const productosPorPyme = {
       destacado: true,
     },
   ],
-}
+};
 
 interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
+  children?: React.ReactNode;
+  index: number;
+  value: number;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, value, index, ...other } = props;
 
   return (
     <div
@@ -283,50 +289,50 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && <Box sx={{ p: { xs: 2, md: 3 } }}>{children}</Box>}
     </div>
-  )
+  );
 }
 
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
-  }
+  };
 }
 
 export default function PymeDetail({ pymeId = 1 }) {
-  const theme = useTheme()
-  const [tabValue, setTabValue] = useState(0)
-  const [pyme, setPyme] = useState<any>(null)
-  const [productos, setProductos] = useState<any[]>([])
+  const theme = useTheme();
+  const [tabValue, setTabValue] = useState(0);
+  const [pyme, setPyme] = useState<any>(null);
+  const [productos, setProductos] = useState<any[]>([]);
 
   useEffect(() => {
     // En un caso real, aquí harías una llamada a la API para obtener los datos
     // basados en el ID de la PyME
-    const pymeEncontrada = pymesMedicas.find((p) => p.id === pymeId)
+    const pymeEncontrada = pymesMedicas.find((p) => p.id === pymeId);
     if (pymeEncontrada) {
-      setPyme(pymeEncontrada)
+      setPyme(pymeEncontrada);
 
       // Obtener productos de esta PyME
-      const productosEncontrados = productosPorPyme[pymeId as keyof typeof productosPorPyme] || []
-      setProductos(productosEncontrados)
+      const productosEncontrados =
+        productosPorPyme[pymeId as keyof typeof productosPorPyme] || [];
+      setProductos(productosEncontrados);
     }
-  }, [pymeId])
+  }, [pymeId]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue)
-  }
+    setTabValue(newValue);
+  };
 
   if (!pyme) {
     return (
       <Container maxWidth="lg" sx={{ py: 8, textAlign: "center" }}>
         <Typography variant="h5">Cargando información...</Typography>
       </Container>
-    )
+    );
   }
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-     
       <Paper
         sx={{
           mb: 4,
@@ -367,99 +373,132 @@ export default function PymeDetail({ pymeId = 1 }) {
                     {pyme.nombre}
                   </Typography>
                   {pyme.calificacion > 4.5 && (
-                    <Chip icon={<Verified />} label="Verificado" size="small" color="primary" sx={{ ml: 2 }} />
+                    <Chip
+                      icon={<Verified />}
+                      label="Verificado"
+                      size="small"
+                      color="primary"
+                      sx={{ ml: 2 }}
+                    />
                   )}
                 </Box>
-               
+
                 <Typography variant="body1" sx={{ mb: 2, maxWidth: "800px" }}>
                   {pyme.descripcion}
                 </Typography>
                 <Box
-                  sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: { xs: "center", md: "flex-start" } }}
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 2,
+                    justifyContent: { xs: "center", md: "flex-start" },
+                  }}
                 >
                   <Chip
                     icon={<LocalHospital />}
                     label={`${pyme.rubro} - ${pyme.especialidad}`}
                     variant="outlined"
-                    sx={{ borderColor: "rgba(255,255,255,0.5)", color: "white" }}
+                    sx={{
+                      borderColor: "rgba(255,255,255,0.5)",
+                      color: "white",
+                    }}
                   />
                   <Chip
                     icon={<FmdGood />}
                     label={pyme.ubicacion}
                     variant="outlined"
-                    sx={{ borderColor: "rgba(255,255,255,0.5)", color: "white" }}
+                    sx={{
+                      borderColor: "rgba(255,255,255,0.5)",
+                      color: "white",
+                    }}
                   />
-                  
                 </Box>
               </Box>
             </Grid>
           </Grid>
         </Box>
       </Paper>
-
       {/* Pestañas de información */}
       <Paper sx={{ mb: 4 }}>
-        
-
         {/* Pestaña de Productos y Servicios */}
-   
-          <Typography variant="h5" gutterBottom>
-            Productos y Servicios
-          </Typography>
-          <Typography variant="body2" color="text.secondary" paragraph>
-            Descubre nuestra amplia gama de productos y servicios diseñados para satisfacer tus necesidades médicas.
-          </Typography>
 
-         
-        
-          <Grid container spacing={3}>
-            {productos.map((producto) => (
-              <Grid item xs={12} sm={6} md={4} key={producto.id}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia component="img" height="140" image={producto.imagen} alt={producto.nombre} />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
-                      <Typography gutterBottom variant="h6" component="div">
-                        {producto.nombre}
-                      </Typography>
-                      <Chip label={producto.categoria} size="small" color="primary" variant="outlined" />
-                    </Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                      {producto.descripcion}
+        <Typography variant="h5" gutterBottom>
+          Productos y Servicios
+        </Typography>
+        <Typography variant="body2" color="text.secondary" paragraph>
+          Descubre nuestra amplia gama de productos y servicios diseñados para
+          satisfacer tus necesidades médicas.
+        </Typography>
+
+        <Grid container spacing={3}>
+          {productos.map((producto) => (
+            <Grid item xs={12} sm={6} md={4} key={producto.id}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={producto.imagen}
+                  alt={producto.nombre}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      mb: 1,
+                    }}
+                  >
+                    <Typography gutterBottom variant="h6" component="div">
+                      {producto.nombre}
                     </Typography>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <Typography variant="h6" color="primary" fontWeight="bold">
-                        ${producto.precio.toLocaleString("es-MX")} MXN
-                      </Typography>
-                      
-                    </Box>
-                   
-                    
-                  </CardContent>
-                  <CardActions sx={{ p: 2, pt: 0 }}>
-                    <Button variant="contained" fullWidth startIcon={<ShoppingCart />}>
-                      Solicitar
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        
-
-
-
-        
+                    <Chip
+                      label={producto.categoria}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 2 }}
+                  >
+                    {producto.descripcion}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography variant="h6" color="primary" fontWeight="bold">
+                      ${producto.precio.toLocaleString("es-MX")}  
+                    </Typography>
+                  </Box>
+                </CardContent>
+                <CardActions sx={{ p: 2, pt: 0 }}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    startIcon={<ShoppingCart />}
+                  >
+                    Solicitar
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Paper>
-
-  ]
+      ]
     </Container>
-  )
+  );
 }
-

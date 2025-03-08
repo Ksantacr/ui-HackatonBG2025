@@ -193,7 +193,7 @@ export default function HomePage() {
                             </Typography>
                           </Box>
                           <Typography variant="h5" fontWeight="bold">
-                            $500,000 MXN
+                            $500,000  
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
                             Actualizado: 15/03/2023
