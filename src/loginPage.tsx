@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn, signUp } from './authService';
 import {
-  Button,
   Flex,
   Heading,
   TextField,
   View,
   Divider
 } from '@aws-amplify/ui-react';
+import Button from '@mui/material/Button';
 import '@aws-amplify/ui-react/styles.css';
 import './loginPage.css';
 
@@ -102,11 +102,11 @@ const LoginPage = () => {
               marginBottom="medium"
             />
           )}
-          <Button type="submit" variation="primary" isFullWidth>{isSignUp ? 'Sign Up' : 'Sign In'}</Button>
+          <Button type='submit' variant="contained">{isSignUp ? 'Sign Up' : 'Sign In'} </Button>
         </form>
         <Divider marginTop="medium" marginBottom="medium" />
-        <Button onClick={() => setIsSignUp(!isSignUp)} variation="link" isFullWidth>
-          {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
+        <Button onClick={() => setIsSignUp(!isSignUp)}>
+        {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
         </Button>
       </View>
     </Flex>
