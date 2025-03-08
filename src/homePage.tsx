@@ -1,197 +1,337 @@
-// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
+"use client"
 
-import { Button, DropZone, Flex, Heading, Text, View, VisuallyHidden } from '@aws-amplify/ui-react';
-import { useRef, useState } from 'react';
-import Modal from 'react-responsive-modal';
-import { useNavigate } from 'react-router-dom';
-import 'react-responsive-modal/styles.css';
-import axios from 'axios';
+import React, { useState } from "react"
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  Divider,
+  Grid,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+  useTheme,
+} from "@mui/material"
+import {
+  Business,
+  CreditCard,
+  Email,
+  FiberManualRecord,
+  InsertChart,
+  LocationOn,
+  Phone,
+  Star,
+  AttachMoney,
+} from "@mui/icons-material"
 
+import ResponsiveAppBar from './components/header.tsx'
 
-/*eslint-disable*/
-function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
 }
 
-const HomePage = () => {
-  const navigate = useNavigate();
-  var idToken = parseJwt(sessionStorage.idToken.toString());
-  var accessToken = parseJwt(sessionStorage.accessToken.toString());
-  const handleLogout = () => {
-    sessionStorage.clear();
-    navigate('/login');
-  };
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  const acceptedFileTypes = ['image/png', 'image/jpeg'];
-
-
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-
-    const apiUrl = process.env.REACT_APP_API_URL; // Get URL from environment variable
-
-    try {
-      await axios.post(apiUrl, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      // Handle success (e.g., show a success message, clear form)
-      console.log('Pet lost report submitted successfully!');
-    } catch (error) {
-      // Handle errors (e.g., display an error message)
-      console.error('Error submitting pet lost report:', error);
-    }
-  };
-
-  const [open, setOpen] = useState(false);
-
-  const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-
-  const [files, setFiles] = useState([]);
-  const hiddenInput = useRef(null);
-
-  const onFilePickerChange = (event) => {
-    const { files } = event.target;
-    if (!files || files.length === 0) {
-      return;
-    }
-    setFiles(Array.from(files));
-  };
-
-/*eslint-enable*/
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
 
   return (
-    <div>
-      <div className='mb-5'>
-          <img src="./familypet.png" width={200} />
-        </div>       
-    <View margin="2rem">
-                    <Heading level={3}>Welcome to PetFamily!</Heading>
-                    <Flex direction="row" justifyContent="space-around">
-                        <Button variation="primary" onClick={() => true}>
-                            Report Lost Pet
-                        </Button>
-                        <Button variation="primary" onClick={() => true}>
-                            Help Find a Pet
-                        </Button>
-                    </Flex>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  )
+}
 
-                    <button onClick={onOpenModal}>About Us</button>
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  }
+}
 
-                    <button onClick={handleLogout}>Logout</button>
+export default function HomePage() {
+  const [tabValue, setTabValue] = useState(0)
+  const theme = useTheme()
 
-                    {/* About Us Modal */}
-                    <Modal open={open} onClose={onCloseModal} center>
-                      <h2>Family Pets</h2>
-                      <p>Our mission is to assist in the search for lost pets with families through a seamless, transparent and compassionate process using Diagrid Catalyst.</p>
-                      <div>
-                        <h4>Supported Breeds byt the ML model on Rekognition:</h4>
-                        <Flex direction="row">
-                          <ul>
-                          <li>abyssinian</li>
-                          <li>american_bulldog</li>
-                          <li>american_pit_bull_terrier</li>
-                          <li>basset_hound</li>
-                          <li>beagle</li>
-                          <li>bengal</li>
-                          <li>birman</li>
-                          <li>bombay</li>
-                          <li>boxer</li>
-                          <li>keeshond</li>
-                          <li>leonberger</li>
-                          <li>maine_coon</li>
-                          <li>miniature_pinscher</li>
-                          <li>newfoundland</li>
-                          </ul>
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue)
+  }
 
-                          <ul>
-                          
-                          <li>persian</li>
-                          <li>pomeranian</li>
-                          <li>pug</li>
-                          <li>ragdoll</li>
-                          <li>russian_blue</li>
-                          <li>saint_bernard</li>
-                          <li>samoyed</li>
-                          <li>scottish_terrier</li>
-                          <li>shiba_inu</li>
-                          <li>siamese</li>
-                          <li>sphynx</li>
-                          <li>staffordshire_bull_terrier</li>
-                          <li>wheaten_terrier</li>
-                          <li>yorkshire_terrier</li>
-                        </ul>
-                        </Flex>
-                        
-                      </div>
-                      <a href='https://github.com/Ksantacr/FamilyPetsHackatonDiagrid/' target="_blank">Github repository</a>
-                    </Modal>
-                </View>
+  return (
+    
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <ResponsiveAppBar/> 
+      <Grid container spacing={3}>
+        <Grid item xs={12} lg={8}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              gap: 2,
+              mb: 3,
+              alignItems: { md: "center" },
+            }}
+          >
+            <Avatar
+              src="/placeholder.svg?height=96&width=96"
+              alt="Logo de la empresa"
+              sx={{ width: 80, height: 80, border: `1px solid ${theme.palette.divider}` }}
+            />
+            <Box>
+              <Typography variant="h4" component="h1" fontWeight="bold">
+                Tecnología Innovadora S.A.
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                Soluciones tecnológicas para empresas
+              </Typography>
+            </Box>
+          </Box>
 
-                <View>
-                  {/* <form>
-                  <Input placeholder="Baggins"/>
-                  </form> */}
-                   <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="image">Pet Image:</label>
-        {/* <input type="file" id="image" onChange={handleFileChange} /> */}
+          <Paper sx={{ width: "100%" }}>
+         
 
-        <>
-      <DropZone
-        acceptedFileTypes={acceptedFileTypes}
-        onDropComplete={({ acceptedFiles, rejectedFiles }) => {
+          
+              <Card sx={{ mb: 3 }}>
+                <CardHeader title="Información de la Empresa" subheader="Detalles generales sobre la empresa" />
+                <CardContent>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="subtitle1" fontWeight="medium">
+                      Descripción
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      Tecnología Innovadora S.A. es una empresa líder en el sector tecnológico, especializada en el
+                      desarrollo de soluciones digitales para empresas de todos los tamaños. Fundada en 2010, nuestra
+                      misión es transformar la manera en que las empresas utilizan la tecnología para mejorar sus
+                      operaciones y resultados.
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="subtitle1" fontWeight="medium">
+                      Industria
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      Tecnología de la Información
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="subtitle1" fontWeight="medium">
+                      Tamaño de la empresa
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      51-200 empleados
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="medium">
+                      Año de fundación
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      2010
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
 
-          console.log(acceptedFiles)
-          setFiles(acceptedFiles);
-        }}
+              <Card>
+                <CardHeader title="Servicios Principales" />
+                <CardContent>
+                  <List dense disablePadding>
+                    {[
+                      "Desarrollo de software a medida",
+                      "Consultoría tecnológica",
+                      "Implementación de sistemas ERP",
+                      "Soluciones de ciberseguridad",
+                      "Servicios en la nube",
+                    ].map((service, index) => (
+                      <ListItem key={index} disablePadding sx={{ py: 0.5 }}>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <FiberManualRecord sx={{ fontSize: 8, color: "primary.main" }} />
+                        </ListItemIcon>
+                        <ListItemText primary={service} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </CardContent>
+              </Card>
+            
 
-        onDrop={()=> console.log("on drop")}
+           
 
-      >
-        <Flex direction="column" alignItems="center">
-          <Text>Drag pet photo here or</Text>
-          <Button size="small" onClick={() => hiddenInput.current.click()}>
-            Browse
-          </Button>
-        </Flex>
-        <VisuallyHidden>
-          <input
-            type="file"
-            tabIndex={-1}
-            ref={hiddenInput}
-            onChange={onFilePickerChange}
-            multiple={false}
-            accept={acceptedFileTypes.join(',')}
-          />
-        </VisuallyHidden>
-      </DropZone>
-      {files.map((file) => (
-        <Text key={file.name}>{file.name}</Text>
-      ))}
-    </>
-      </div>
-      <button type="submit">Report Pet Lost</button>
-    </form>
-                </View>
-                </div>
-  );
-};
+            
+          </Paper>
+        </Grid>
 
-export default HomePage;
+        <Grid item xs={12} lg={4}>
+        <Card sx={{ mb: 3 }}>
+                <CardHeader title="Información de Crédito" subheader="Estado crediticio actual de la empresa" />
+                <CardContent>
+                  <Grid container spacing={2} sx={{ mb: 4 }}>
+                    <Grid item xs={12} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                            <CreditCard fontSize="small" color="action" sx={{ mr: 1 }} />
+                            <Typography variant="body2" color="text.secondary">
+                              Crédito Aprobado
+                            </Typography>
+                          </Box>
+                          <Typography variant="h5" fontWeight="bold">
+                            $500,000 MXN
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Actualizado: 15/03/2023
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                            <AttachMoney fontSize="small" color="action" sx={{ mr: 1 }} />
+                            <Typography variant="body2" color="text.secondary">
+                              Tasa de Interés
+                            </Typography>
+                          </Box>
+                          <Typography variant="h5" fontWeight="bold">
+                            12.5%
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Anual
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                            <Star fontSize="small" color="action" sx={{ mr: 1 }} />
+                            <Typography variant="body2" color="text.secondary">
+                              Score Crediticio
+                            </Typography>
+                          </Box>
+                          <Typography variant="h5" fontWeight="bold">
+                            780
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Excelente
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </Grid>
+                  <Box sx={{ mb: 2 }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+                      <Typography variant="body2" fontWeight="medium">
+                        Utilización de Crédito
+                      </Typography>
+                      <Typography variant="body2">25%</Typography>
+                    </Box>
+                    <LinearProgress variant="determinate" value={25} sx={{ height: 6, borderRadius: 3 }} />
+                  </Box>
+                </CardContent>
+                <CardActions>
+                  <Button variant="contained" fullWidth>
+                    Solicitar Aumento de Crédito
+                  </Button>
+                </CardActions>
+              </Card>
+
+          <Card sx={{ mb: 3 }}>
+                <CardHeader title="Información de Contacto" />
+                <CardContent>
+                  <List>
+                    <ListItem>
+                      <ListItemIcon>
+                        <Business />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="Dirección"
+                        secondary={
+                          <>
+                            Av. Reforma 123, Col. Juárez
+                            <br />
+                            Ciudad de México, CP 06600
+                            <br />
+                            México
+                          </>
+                        }
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemIcon>
+                        <Phone />
+                      </ListItemIcon>
+                      <ListItemText primary="Teléfono" secondary="+52 (55) 1234-5678" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemIcon>
+                        <Email />
+                      </ListItemIcon>
+                      <ListItemText primary="Correo Electrónico" secondary="contacto@tecnologiainnovadora.mx" />
+                    </ListItem>
+                  </List>
+                </CardContent>
+                <CardActions>
+                  <Button variant="contained" fullWidth>
+                    Contactar
+                  </Button>
+                </CardActions>
+              </Card>
+
+              <Card>
+                <CardHeader title="Representante de Cuenta" />
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Avatar
+                      src="/placeholder.svg?height=64&width=64"
+                      alt="Representante"
+                      sx={{ width: 64, height: 64 }}
+                    />
+                    <Box>
+                      <Typography variant="subtitle1" fontWeight="medium">
+                        Carlos Rodríguez
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Gerente de Cuentas Corporativas
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        carlos.rodriguez@tecnologiainnovadora.mx
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        +52 (55) 1234-5678 ext. 123
+                      </Typography>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+
+
+          
+        </Grid>
+      </Grid>
+    </Container>
+  )
+}
+
+
+
+
