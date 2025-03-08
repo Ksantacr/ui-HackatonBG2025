@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { CognitoIdentityProviderClient, InitiateAuthCommand, SignUpCommand, ConfirmSignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
+import { CognitoIdentityProviderClient, InitiateAuthCommand, SignUpCommand, ConfirmSignUpCommand, InitiateAuthCommandInput } from "@aws-sdk/client-cognito-identity-provider";
 
 const region = import.meta.env.VITE_APP_REGION;
 const clientId = import.meta.env.VITE_APP_CLIENT_ID;
@@ -18,7 +18,7 @@ export const signIn = async (username: string, password: string) => {
       USERNAME: username,
       PASSWORD: password,
     },
-  };
+  } as InitiateAuthCommandInput;
   try {
     const command = new InitiateAuthCommand(params);
     const { AuthenticationResult } = await cognitoClient.send(command);
