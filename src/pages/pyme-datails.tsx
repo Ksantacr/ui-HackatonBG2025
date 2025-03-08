@@ -437,18 +437,10 @@ export default function PymeDetail({ pymeId = 1 }) {
                       <Typography variant="h6" color="primary" fontWeight="bold">
                         ${producto.precio.toLocaleString("es-MX")} MXN
                       </Typography>
-                      <Chip label={producto.disponibilidad} size="small" color="success" variant="outlined" />
+                      
                     </Box>
-                    {producto.preparacion && (
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        <strong>Preparación:</strong> {producto.preparacion}
-                      </Typography>
-                    )}
-                    {producto.duracion && (
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        <strong>Duración:</strong> {producto.duracion}
-                      </Typography>
-                    )}
+                   
+                    
                   </CardContent>
                   <CardActions sx={{ p: 2, pt: 0 }}>
                     <Button variant="contained" fullWidth startIcon={<ShoppingCart />}>
@@ -466,35 +458,7 @@ export default function PymeDetail({ pymeId = 1 }) {
         
       </Paper>
 
-    
-      {/* Llamada a la acción */}
-      <Paper sx={{ p: 4, textAlign: "center", bgcolor: theme.palette.primary.main, color: "white" }}>
-        <Typography variant="h5" gutterBottom>
-          ¿Necesitas más información?
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Nuestro equipo está listo para atenderte y resolver todas tus dudas.
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, flexWrap: "wrap" }}>
-          <Button variant="contained" color="secondary" size="large" startIcon={<Call />} href={`tel:${pyme.telefono}`}>
-            Llamar ahora
-          </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<WhatsApp />}
-            href={`https://wa.me/${pyme.whatsapp}`}
-            target="_blank"
-            sx={{
-              color: "white",
-              borderColor: "white",
-              "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
-            }}
-          >
-            Contactar por WhatsApp
-          </Button>
-        </Box>
-      </Paper>
+  ]
     </Container>
   )
 }
