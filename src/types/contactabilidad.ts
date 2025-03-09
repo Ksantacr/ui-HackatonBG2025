@@ -5,11 +5,11 @@ export interface Contactabilidad{
     calle_principal: string;
     calle_secundaria?: string;
     numero?: string;
-    referencia: string;
-    latitud: string;
-    longitud: string;
-    email1: string;
-    email2: string;
-    telefono1: string;
-    telefono2: string;
+    referencia?: string;
+    latitud?: string;
+    longitud?: string;
+    email1?: string;
+    email2?: string;
+    telefono1?: string;
+    telefono2?: string;
   }

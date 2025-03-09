@@ -3,9 +3,9 @@ export interface Pyme{
     nombre: string;
     ruc: string;
     descripcion: string;
-    logo?: string;
+    logo: string;
     categoria?: string;
-    calificacion: string;
-    Contactabilidad:Contactabilidad;
-    Product:Product;
+    calificacion?: string;
+    Contactabilidad?:Contactabilidad;
+    Product?:Product;
   }

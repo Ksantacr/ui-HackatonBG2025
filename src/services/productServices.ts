@@ -1,12 +1,74 @@
-import apiProduct from "../api/apiProduct";
-import { Product } from "../types/product";
+import apiPyme from "../api/apiPyme";
+import { Pyme } from "../types/pyme";
 
-// Datos simulados
-const mockProducts: Product[] = [
-    { Id: 1, Nombre: "Producto A", Precio: 100, Stock: 100, Descripcion: "test" , Categoria: "mediano"  },
-    { Id: 2, Nombre: "Producto B", Precio: 200 , Stock: 100 , Descripcion: "test", Categoria: "mediano" },
-    { Id: 3, Nombre: "Producto C", Precio: 300 , Stock: 100 , Descripcion: "test", Categoria: "mediano" }
+const mockContactabilidad: Contactabilidad = {
+    pais: "Ecuador",
+    ciudad: "Guayaquil",
+    provincia: "Guayas",
+    calle_principal: "Av. 9 de Octubre",
+    calle_secundaria: "Av. Malecon",
+    numero: "1234",
+    referencia: "Frente al parque",
+    latitud: -2.203816,
+    longitud: -79.897453,
+    email1: "info@contoso.com",
+    email2: "ventas@contoso.com",
+    telefono1: "0991234567",
+    telefono2: "0421234567"
+  };
+  
+  const mockInfo: Info = {
+    id_cliente: 156464,
+    nombre: "Contoso S.A.",
+    ruc: "0987654321001",
+    descripcion: "Descripcion de la empresa",
+    logo: "s3://hackathon-bg/Servicios-de-seguro-medico-859x639 (1).jpg",
+    categoria: "Medicina",
+    calificacion: 4.5,
+    contactabilidad: mockContactabilidad
+  };
+  
+  const mockProductos: Producto[] = [
+    {
+      idProducto: "f7b3b2b1-5b7b-4b3b-8b7b-2b1b3b4b5b7b",
+      nombre: "Producto 1",
+      precio: 100,
+      stock: 10,
+      descripcion: "Descripcion del producto 1",
+      categoria: "Medicina"
+    },
+    {
+      idProducto: "f7b3b2b1-5b7b-4b3b-8b7b-2b1b3b4b5b7b2",
+      nombre: "Producto 2",
+      precio: 200,
+      stock: 20,
+      descripcion: "Descripcion del producto 2",
+      categoria: "Medicina"
+    },
+    {
+      idProducto: "f7b3b2b1-5b7b-4b3b-8b7b-2b1b3b4b5b7b3",
+      nombre: "Producto 3",
+      precio: 300,
+      stock: 30,
+      descripcion: "Descripcion del producto 3",
+      categoria: "Medicina"
+    }
   ];
+  
+  const mockData: Data = {
+    info: mockInfo,
+    productos: mockProductos
+  };
+  
+  const mockRespuesta: Respuesta = {
+    code: 200,
+    traceId: "0HM1V2JL",
+    data: mockData
+  };
+  
+  console.log(mockRespuesta);
+  
+  
 function simulateApiResponse<T>(data: T, delay = 1000): Promise<T> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -15,32 +77,20 @@ function simulateApiResponse<T>(data: T, delay = 1000): Promise<T> {
     });
   }
 
-// Obtener todos los productos
-export const getProducts = async (): Promise<Product[]> => {
-  //const response = await apiProduct.get<Product[]>("/products");
-  //return response.data;
-  return simulateApiResponse<Product[]>(mockProducts);
-};
+export const getProductsSimulation = async (): Promise<Data[]> => {
+    return simulateApiResponse([mockRespuesta]);
+  };
 
-// Obtener un produtos por ID
-export const getProductById = async (id: number): Promise<Product> => {
-  const response = await apiProduct.get<Product>(`/products/${id}`);
-  return response.data;
-};
-
-// Crear un producto
-export const createProduct = async (userData: Partial<Product>): Promise<Product> => {
-  const response = await apiProduct.post<Product>("/products", userData);
-  return response.data;
-};
-
-// Actualizar un usuario
-export const updateProduct = async (id: number, userData: Partial<Product>): Promise<Product> => {
-  const response = await apiProduct.put<Product>(`/products/${id}`, userData);
-  return response.data;
-};
-
-// Eliminar un usuario
-export const deleteProduct = async (id: number): Promise<void> => {
-  await apiProduct.delete(`/products/${id}`);
+  export const getProducts = async (codigo_cliente: number): Promise<Data[]> => {
+    console.log('codigo cliente:', codigo_cliente);
+    try {
+        const response = await apiPyme.get<Data[]>(`/info-perfil`, {
+            headers: { "codigo_cliente": codigo_cliente.toString() }, // Enviar en el header
+        });
+        console.log('response:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        return []; // Retorna un array vacío en caso de error
+    }
 };
