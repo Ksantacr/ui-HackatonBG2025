@@ -189,26 +189,12 @@ export default function HomePage() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
   const [activeTab, setActiveTab] = useState(0)
-  const [formData, setFormData] = useState({
-    nombre: "",
-    empresa: "",
-    email: "",
-    telefono: "",
-    mensaje: "",
-  })
-  const [formSubmitted, setFormSubmitted] = useState(false)
+ 
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue)
   }
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
 
 
 
@@ -218,16 +204,21 @@ export default function HomePage() {
     <Box sx={{ bgcolor: "#f8f9FFfa" }}>
       {/* Hero Section */}
       <Box
+
+    
+       
         sx={{
-          background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/placeholder.svg?height=800&width=1600')`,
+          
+          background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://www.bancoguayaquil.com/static/347fcb1b735bef012f3990090d1b0698/70f2d/Desktop4_2916x1489x150px.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "white",
-          py: { xs: 8, md: 12 },
+          py: { xs: 8, md: 16 },
           position: "relative",
         }}
       >
         <Container maxWidth="lg">
+            
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>
               <Typography
@@ -300,7 +291,7 @@ export default function HomePage() {
                 <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                   <AccountBalance color="primary" sx={{ fontSize: 40, mr: 2 }} />
                   <Typography variant="h5" fontWeight="bold" color="primary">
-                    Respaldo Financiero
+                    Crecimiento en Comunidad
                   </Typography>
                 </Box>
                 <Typography variant="body1" paragraph>
@@ -309,10 +300,10 @@ export default function HomePage() {
                 </Typography>
                 <List dense>
                   {[
-                    "Tasas preferenciales desde 8.5%",
-                    "Plazos flexibles hasta 60 meses",
-                    "Período de gracia adaptado a tu negocio",
-                    "Aprobación rápida en 48 horas",
+                    "Tasas preferenciales exclusivas para miembros",
+                    "Conexión con proveedores de tu cadena de valor",
+                    "Visibilidad directa de tus productos",
+                    "Garantía de verificación de empresas",
                   ].map((item, index) => (
                     <ListItem key={index} disablePadding sx={{ mb: 0.5 }}>
                       <ListItemIcon sx={{ minWidth: 30 }}>
@@ -322,8 +313,8 @@ export default function HomePage() {
                     </ListItem>
                   ))}
                 </List>
-                <Button variant="contained" fullWidth sx={{ mt: 2 }} endIcon={<ArrowForward />}>
-                  Solicitar Financiamiento
+                <Button variant="contained" fullWidth sx={{ mt: 2  }} endIcon={<ArrowForward />}>
+                  Solicitar Asesoria
                 </Button>
               </Paper>
             </Grid>
@@ -400,7 +391,7 @@ export default function HomePage() {
           <Grid item xs={12} md={6}>
             <Box
               component="img"
-              src="/placeholder.svg?height=600&width=800"
+              src="https://www.bancoguayaquil.com/static/347fcb1b735bef012f3990090d1b0698/70f2d/Desktop4_2916x1489x150px.webp"
               alt="Comunidad de PyMEs"
               sx={{
                 width: "100%",
@@ -536,10 +527,11 @@ export default function HomePage() {
             <Grid item xs={12} md={5}>
               <Box
                 component="img"
-                src="/placeholder.svg?height=600&width=600"
+                src="https://www.bancoguayaquil.com/static/d6daca55957f28cbccdf528f1ece6fd7/70f2d/Desktop3_2916x1489x150px.webp"
                 alt="Cadena de valor"
                 sx={{
                   width: "100%",
+                  height: "100%",
                   borderRadius: 2,
                   boxShadow: 4,
                 }}
