@@ -4,7 +4,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './loginPage';
 import HomePage from './pages/home-page';
-import ConfirmUserPage from './confirmUserPage';
 import MainLayout from "./layout/ mainLayout";
 import Community from './pages/community';
 import PymeDetail from './pages/pyme-datails';

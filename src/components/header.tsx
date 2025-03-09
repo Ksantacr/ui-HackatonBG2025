@@ -45,7 +45,8 @@ const ResponsiveAppBar = () => {
       enableColorOnDark
       sx={{
         p: 1,
-        backdropFilter: "blur(10px)", // Desenfoque para efecto Glassmorphism
+        backdropFilter: "blur(10px)",
+        color: "white", // Desenfoque para efecto Glassmorphism
         bgcolor: "#D2006E", // Fondo translúcido
         boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)", // Sombra suave
         border: "1px solid rgba(255, 255, 255, 0.3)", // Borde sutil
@@ -66,9 +67,9 @@ const ResponsiveAppBar = () => {
               textColor="primary"
               indicatorColor="secondary"
             >
-              <LinkTab label="Inicio" to="/landing-page" selected={selectedTab === "/landing-page"} value="/landing-page"  />
-              <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"} value="/community" />
-              <LinkTab label="Mi Pyme" to="/my-pyme" selected={selectedTab === "/my-pyme"} value="/my-pyme" />
+              <LinkTab label="Inicio" to="/landing-page" selected={selectedTab === "/landing-page"}   />
+              <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"}  />
+              <LinkTab label="Mi Pyme" to="/my-pyme" selected={selectedTab === "/my-pyme"}  />
             </Tabs>
           </Grid>
 
