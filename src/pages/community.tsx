@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -37,8 +37,9 @@ import {
 } from "@mui/material"
 import { Email, FilterList, FmdGood, LocalHospital, Phone, Search } from "@mui/icons-material"
 import HeroSection from "../components/hero-section"
+import { getPymes } from '../services/pymeServices';
 // Datos de ejemplo de pymes en el sector médico
-const pymesMedicas = [
+/*const pymesMedicas = [
   {
     id: 1,
     nombre: "Clínica San Rafael",
@@ -178,7 +179,7 @@ const pymesMedicas = [
     descripcion:
       "Atención psicológica y psiquiátrica integral con enfoque en el bienestar emocional y la salud mental.",
   },
-]
+]*/
 
 export default function Community() {
   const theme = useTheme()
@@ -188,23 +189,36 @@ export default function Community() {
   const [selectedPyme, setSelectedPyme] = useState<any>(null)
   const [page, setPage] = useState(1)
   const itemsPerPage = 6
+  const [selectedPymesData, setSelectedPymesData] = useState<Data[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPymes();
+        setSelectedPymesData(data);
+      } catch (error) {
+        console.error("Error fetching pymes data:", error);
+      }
+    };
 
-  // Obtener lista única de especialidades para el filtro
-  const especialidades = [...new Set(pymesMedicas.map((pyme) => pyme.especialidad))]
+    fetchData();
+  }, []);
+  
 
-  // Filtrar pymes basado en búsqueda y filtro de especialidad
-  const filteredPymes = pymesMedicas.filter((pyme) => {
+  const filteredPymes = selectedPymesData.filter((pyme) => {
     const matchesSearch =
-      pyme.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pyme.ubicacion.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pyme.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesEspecialidad = especialidadFilter === "" || pyme.especialidad === especialidadFilter
-    return matchesSearch && matchesEspecialidad
-  })
-
+      pyme.info.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pyme.info.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (pyme.ubicacion ? pyme.ubicacion.toLowerCase().includes(searchTerm.toLowerCase()) : false); // Verifica si ubicacion existe
+  
+    const matchesEspecialidad =
+      especialidadFilter === "" || (pyme.especialidad && pyme.especialidad === especialidadFilter); // Verifica si especialidad existe
+  
+    return matchesSearch && matchesEspecialidad;
+  });
+  
   // Paginación
-  const totalPages = Math.ceil(filteredPymes.length / itemsPerPage)
-  const paginatedPymes = filteredPymes.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+  const totalPages = Math.ceil(filteredPymes.length / itemsPerPage);
+  const paginatedPymes = filteredPymes.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -325,7 +339,7 @@ export default function Community() {
                 }
               >
                 <MenuItem value="">Todas las especialidades</MenuItem>
-                {especialidades.map((especialidad) => (
+                {selectedPymesData.map((especialidad) => (
                   <MenuItem key={especialidad} value={especialidad}>
                     {especialidad}
                   </MenuItem>
@@ -356,7 +370,7 @@ export default function Community() {
                   <CardMedia component="img" height="160" image={pyme.imagen} alt={pyme.nombre} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h6" component="div">
-                      {pyme.nombre}
+                    {pyme.info.nombre}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <LocalHospital fontSize="small" color="primary" sx={{ mr: 1 }} />
@@ -367,11 +381,11 @@ export default function Community() {
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <FmdGood fontSize="small" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body2" color="text.secondary">
-                        {pyme.ubicacion}
+                        {pyme.info.ubicacion}
                       </Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      {pyme.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
+                      {pyme.info.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "space-between", alignSelf:"center", p: 2, pt: 0 }}>
