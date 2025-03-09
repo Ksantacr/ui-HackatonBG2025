@@ -2,11 +2,11 @@ import React, { useState } from "react";
 
 import { AppBar, Stack, Divider, IconButton, Toolbar, Typography, Tabs, Tab, Grid, Avatar, Box } from "@mui/material";
 import { LogoutOutlined } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
-
+import { signOut } from "../authService";
 
 // Componente para crear enlaces dentro de Tabs
 function LinkTab(props) {
@@ -16,6 +16,8 @@ function LinkTab(props) {
       to={props.to}
       aria-current={props.selected ? "page" : undefined}
       {...props}
+      value="1"
+      color="red"
     />
   );
 }
@@ -28,15 +30,19 @@ LinkTab.propTypes = {
 
 const ResponsiveAppBar = () => {
 
+  const navigate = useNavigate();
   const location = useLocation(); // Obtiene la ruta actual
   const theme = useTheme(); // Obtiene colores del theme
   const [selectedTab, setSelectedTab] = useState(location.pathname); // Estado de pestaña activa
 
-
-
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
+
+  const logoutButton = () => {
+    signOut();
+    navigate("login");
+  }
 
   return (
     <AppBar
@@ -67,9 +73,9 @@ const ResponsiveAppBar = () => {
               textColor="primary"
               indicatorColor="secondary"
             >
-              <LinkTab label="Inicio" to="/landing-page" selected={selectedTab === "/landing-page"}   />
-              <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"}  />
-              <LinkTab label="Mi Pyme" to="/my-pyme" selected={selectedTab === "/my-pyme"}  />
+              <LinkTab label="Inicio" to="/landing-page" selected={selectedTab === "/landing-page"} />
+              <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"} />
+              <LinkTab label="Mi Pyme" to="/my-pyme" selected={selectedTab === "/my-pyme"} />
             </Tabs>
           </Grid>
 
@@ -81,7 +87,7 @@ const ResponsiveAppBar = () => {
               </Typography>
               <Avatar alt="User" src="https://i.pravatar.cc/40" />
               <Divider orientation="vertical" flexItem />
-              <IconButton  color="primary" size="small">
+              <IconButton  color="primary" size="small" onClick={logoutButton}>
                 <LogoutOutlined />
               </IconButton>
             </Stack>

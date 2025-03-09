@@ -62,6 +62,7 @@ const LoginPage = () => {
       justifyContent="center"
       padding="large"
       className="page-container"
+      minHeight="100vh"
     >
       <View className="card">
         <div className='mb-5'>
