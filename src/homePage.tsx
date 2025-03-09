@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Avatar,
   Box,
@@ -35,6 +35,8 @@ import {
   AttachMoney,
 } from "@mui/icons-material"
 
+import { getProducts } from "./services/productServices";
+
 
 
 interface TabPanelProps {
@@ -68,46 +70,55 @@ function a11yProps(index: number) {
 
 export default function HomePage() {
   const [tabValue, setTabValue] = useState(0)
-  const theme = useTheme()
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue)
-  }
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await getProducts();
+        console.log(response);
+        //setProducts(response.data.products);
+        setProducts(response);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+    fetchProducts();
 
-  return (
-    
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+      setTabValue(newValue)
+    }
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} lg={8}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              gap: 2,
-              mb: 3,
-              alignItems: { md: "center" },
-            }}
-          >
-            <Avatar
-              src="/placeholder.svg?height=96&width=96"
-              alt="Logo de la empresa"
-              sx={{ width: 80, height: 80, border: `1px solid ${theme.palette.divider}` }}
-            />
-            <Box>
-              <Typography variant="h4" component="h1" fontWeight="bold">
-                Tecnología Innovadora S.A.
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                Soluciones tecnológicas para empresas
-              </Typography>
+    return (
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} lg={8}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: 2,
+                mb: 3,
+                alignItems: { md: "center" },
+              }}
+            >
+              <Avatar
+                src="/placeholder.svg?height=96&width=96"
+                alt="Logo de la empresa"
+                sx={{ width: 80, height: 80, border: `1px solid ${theme.palette.divider}` }}
+              />
+              <Box>
+                <Typography variant="h4" component="h1" fontWeight="bold">
+                  Tecnología Innovadora S.A.
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  Soluciones tecnológicas para empresas
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-
-          <Paper sx={{ width: "100%" }}>
-         
-
-          
+            <Paper sx={{ width: "100%" }}>
               <Card sx={{ mb: 3 }}>
                 <CardHeader title="Información de la Empresa" subheader="Detalles generales sobre la empresa" />
                 <CardContent>
@@ -170,167 +181,156 @@ export default function HomePage() {
                   </List>
                 </CardContent>
               </Card>
-            
-
-           
-
-            
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} lg={4}>
-        <Card sx={{ mb: 3 }}>
-                <CardHeader title="Información de Crédito" subheader="Estado crediticio actual de la empresa" />
-                <CardContent>
-                  <Grid container spacing={2} sx={{ mb: 4 }}>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <CreditCard fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Crédito Aprobado
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            $500,000 MXN
+            </Paper>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <Card sx={{ mb: 3 }}>
+              <CardHeader title="Información de Crédito" subheader="Estado crediticio actual de la empresa" />
+              <CardContent>
+                <Grid container spacing={2} sx={{ mb: 4 }}>
+                  <Grid item xs={12} md={4}>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                          <CreditCard fontSize="small" color="action" sx={{ mr: 1 }} />
+                          <Typography variant="body2" color="text.secondary">
+                            Crédito Aprobado
                           </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Actualizado: 15/03/2023
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <AttachMoney fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Tasa de Interés
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            12.5%
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Anual
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <Star fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Score Crediticio
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            780
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Excelente
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
+                        </Box>
+                        <Typography variant="h5" fontWeight="bold">
+                          $500,000 MXN
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Actualizado: 15/03/2023
+                        </Typography>
+                      </CardContent>
+                    </Card>
                   </Grid>
-                  <Box sx={{ mb: 2 }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-                      <Typography variant="body2" fontWeight="medium">
-                        Utilización de Crédito
-                      </Typography>
-                      <Typography variant="body2">25%</Typography>
-                    </Box>
-                    <LinearProgress variant="determinate" value={25} sx={{ height: 6, borderRadius: 3 }} />
+                  <Grid item xs={12} md={4}>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                          <AttachMoney fontSize="small" color="action" sx={{ mr: 1 }} />
+                          <Typography variant="body2" color="text.secondary">
+                            Tasa de Interés
+                          </Typography>
+                        </Box>
+                        <Typography variant="h5" fontWeight="bold">
+                          12.5%
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Anual
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                          <Star fontSize="small" color="action" sx={{ mr: 1 }} />
+                          <Typography variant="body2" color="text.secondary">
+                            Score Crediticio
+                          </Typography>
+                        </Box>
+                        <Typography variant="h5" fontWeight="bold">
+                          780
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Excelente
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+                    <Typography variant="body2" fontWeight="medium">
+                      Utilización de Crédito
+                    </Typography>
+                    <Typography variant="body2">25%</Typography>
                   </Box>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" fullWidth>
-                    Solicitar Aumento de Crédito
-                  </Button>
-                </CardActions>
-              </Card>
-
-          <Card sx={{ mb: 3 }}>
-                <CardHeader title="Información de Contacto" />
-                <CardContent>
-                  <List>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Business />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Dirección"
-                        secondary={
-                          <>
-                            Av. Reforma 123, Col. Juárez
-                            <br />
-                            Ciudad de México, CP 06600
-                            <br />
-                            México
-                          </>
-                        }
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Phone />
-                      </ListItemIcon>
-                      <ListItemText primary="Teléfono" secondary="+52 (55) 1234-5678" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Email />
-                      </ListItemIcon>
-                      <ListItemText primary="Correo Electrónico" secondary="contacto@tecnologiainnovadora.mx" />
-                    </ListItem>
-                  </List>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" fullWidth>
-                    Contactar
-                  </Button>
-                </CardActions>
-              </Card>
-
-              <Card>
-                <CardHeader title="Representante de Cuenta" />
-                <CardContent>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Avatar
-                      src="/placeholder.svg?height=64&width=64"
-                      alt="Representante"
-                      sx={{ width: 64, height: 64 }}
+                  <LinearProgress variant="determinate" value={25} sx={{ height: 6, borderRadius: 3 }} />
+                </Box>
+              </CardContent>
+              <CardActions>
+                <Button variant="contained" fullWidth>
+                  Solicitar Aumento de Crédito
+                </Button>
+              </CardActions>
+            </Card>
+            <Card sx={{ mb: 3 }}>
+              <CardHeader title="Información de Contacto" />
+              <CardContent>
+                <List>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Business />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Dirección"
+                      secondary={
+                        <>
+                          Av. Reforma 123, Col. Juárez
+                          <br />
+                          Ciudad de México, CP 06600
+                          <br />
+                          México
+                        </>
+                      }
                     />
-                    <Box>
-                      <Typography variant="subtitle1" fontWeight="medium">
-                        Carlos Rodríguez
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Gerente de Cuentas Corporativas
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        carlos.rodriguez@tecnologiainnovadora.mx
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        +52 (55) 1234-5678 ext. 123
-                      </Typography>
-                    </Box>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Phone />
+                    </ListItemIcon>
+                    <ListItemText primary="Teléfono" secondary="+52 (55) 1234-5678" />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <Email />
+                    </ListItemIcon>
+                    <ListItemText primary="Correo Electrónico" secondary="contacto@tecnologiainnovadora.mx" />
+                  </ListItem>
+                </List>
+              </CardContent>
+              <CardActions>
+                <Button variant="contained" fullWidth>
+                  Contactar
+                </Button>
+              </CardActions>
+            </Card>
+            <Card>
+              <CardHeader title="Representante de Cuenta" />
+              <CardContent>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Avatar
+                    src="/placeholder.svg?height=64&width=64"
+                    alt="Representante"
+                    sx={{ width: 64, height: 64 }}
+                  />
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="medium">
+                      Carlos Rodríguez
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Gerente de Cuentas Corporativas
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      carlos.rodriguez@tecnologiainnovadora.mx
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      +52 (55) 1234-5678 ext. 123
+                    </Typography>
                   </Box>
-                </CardContent>
-              </Card>
-
-
-          
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-  )
-}
+      </Container>
+    )
+  }
 
 
 

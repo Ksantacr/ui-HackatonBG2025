@@ -23,7 +23,9 @@ const App = () => {
         <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/confirm" element={<ConfirmUserPage />} />
-        <Route path="/home" element={isAuthenticated() ? <PymeDetail /> : <Navigate replace to="/login" />} />
+        {/*<Route path="/home" element={isAuthenticated() ? <PymeDetail /> : <Navigate replace to="/login" />} />*/}
+        {/*<Route path="/home" element={<PymeDetail />} />*/}
+        <Route path="/home" element={<Community />} />
         <Route path="*" element={<Navigate to="/home" replace={true} />}
         
     />
