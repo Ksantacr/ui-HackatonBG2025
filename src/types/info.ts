@@ -1,5 +1,7 @@
+import { Contactabilidad } from "./contactabilidad";
+
 export interface Info{
-  idCliente: string;
+  idCliente: number;
   nombre: string;
   ruc: string;
   descripcion: string;
@@ -7,4 +9,4 @@ export interface Info{
   categoria: string;
   calificacion: number;
   contactabilidad: Contactabilidad;
-  }
+}
