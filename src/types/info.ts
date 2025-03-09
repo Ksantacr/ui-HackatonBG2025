@@ -1,5 +1,5 @@
 export interface Info{
-    id_cliente: number;
+  idCliente: string;
   nombre: string;
   ruc: string;
   descripcion: string;

@@ -23,10 +23,11 @@ const App = () => {
         <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/pyme-details" element={<PymeDetail/>} />
+        <Route path="/pyme-details/:pymeId" element={<PymeDetail/>} />
         <Route path="/landing-page" element={<HomePage />} />
         <Route path="/my-pyme" element={<MyPyme />} />
-        <Route path="/home" element={isAuthenticated() ? <ProductPurchase/>: <Navigate replace to="/login" />} />
+        {/*<Route path="/home" element={isAuthenticated() ? <ProductPurchase/>: <Navigate replace to="/login" />} />*/}
+        <Route path="/home" element={<ProductPurchase/>} />{/*temporal hasta tener apis*/}
         <Route path="*" element={<Navigate to="/home" replace={true} />}
         
         

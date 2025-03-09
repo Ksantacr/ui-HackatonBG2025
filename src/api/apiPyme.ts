@@ -1,5 +1,6 @@
 import axios from "axios";
-const apiUrlMain = process.env.REACT_APP_URL_MAIN;
+//const apiUrlMain = process.env.REACT_APP_URL_MAIN;
+const apiUrlMain = "https://localhost:44395"
 const apiPyme= axios.create({
   baseURL: apiUrlMain,
   headers: {

@@ -191,10 +191,13 @@ export default function Community() {
   const itemsPerPage = 6
   const [selectedPymesData, setSelectedPymesData] = useState<Data[]>([]);
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log('apiUrl',apiUrl);
     const fetchData = async () => {
       try {
         const data = await getPymes();
-        setSelectedPymesData(data);
+        console.log('data',data.data)
+        setSelectedPymesData(data.data);
       } catch (error) {
         console.error("Error fetching pymes data:", error);
       }
@@ -206,9 +209,9 @@ export default function Community() {
 
   const filteredPymes = selectedPymesData.filter((pyme) => {
     const matchesSearch =
-      pyme.info.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pyme.info.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      (pyme.ubicacion ? pyme.ubicacion.toLowerCase().includes(searchTerm.toLowerCase()) : false); // Verifica si ubicacion existe
+      pyme.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pyme.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (pyme.ubicacion ? pyme.ubicacion.pais.toLowerCase().includes(searchTerm.toLowerCase()) : false); // Verifica si ubicacion existe
   
     const matchesEspecialidad =
       especialidadFilter === "" || (pyme.especialidad && pyme.especialidad === especialidadFilter); // Verifica si especialidad existe
@@ -231,9 +234,10 @@ export default function Community() {
   }
 
   const handleContactClick = (pyme) => {
+    console.log('a pyme details',pyme);
     setSelectedPyme(pyme)
-    // navigate(`/pyme-details/${pyme.id}`); 
-    navigate(`/pyme-details`); 
+    navigate(`/pyme-details/${pyme.id_Cliente}`); 
+    //navigate(`/pyme-details`); 
   }
 
   const handleCloseDialog = () => {
@@ -367,10 +371,10 @@ export default function Community() {
                     },
                   }}
                 >
-                  <CardMedia component="img" height="160" image={pyme.imagen} alt={pyme.nombre} />
+                  <CardMedia component="img" height="160" image={pyme.logo} alt={pyme.nombre} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h6" component="div">
-                    {pyme.info.nombre}
+                    {pyme.nombre}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <LocalHospital fontSize="small" color="primary" sx={{ mr: 1 }} />
@@ -381,11 +385,11 @@ export default function Community() {
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <FmdGood fontSize="small" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body2" color="text.secondary">
-                        {pyme.info.ubicacion}
+                      {pyme.ubicacion.ciudad}, {pyme.ubicacion.provincia}, {pyme.ubicacion.pais}
                       </Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      {pyme.info.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
+                      {pyme.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "space-between", alignSelf:"center", p: 2, pt: 0 }}>

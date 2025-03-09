@@ -38,6 +38,8 @@ import {
   Verified,
   WhatsApp,
 } from "@mui/icons-material";
+import { getProducts } from '../services/productServices';
+import { useParams } from "react-router-dom";
 
 // Datos de ejemplo de pymes en el sector médico (extendido con más información)
 const pymesMedicas = [
@@ -302,12 +304,19 @@ function a11yProps(index: number) {
 
 
 
-export default function PymeDetail({ pymeId = 1 }) {
+export default function PymeDetail() {
+  const { pymeId } = useParams();
+  console.log('id',pymeId);
+  const pymeId1 =1;//temporal hasta tener api
+
   const theme = useTheme();
   const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [pyme, setPyme] = useState<any>(null);
   const [productos, setProductos] = useState<any[]>([]);
+
+  const [selectedPymesData, setSelectedPymesData] = useState<Data[]>([]);
+
   const handleBuyNowClick = () => {
     navigate("/product-purchase"); // Redirige a la página de compra
   };
@@ -315,16 +324,47 @@ export default function PymeDetail({ pymeId = 1 }) {
   useEffect(() => {
     // En un caso real, aquí harías una llamada a la API para obtener los datos
     // basados en el ID de la PyME
-    const pymeEncontrada = pymesMedicas.find((p) => p.id === pymeId);
+
+    const fetchData = async () => {
+      try {
+        console.log('pymeId',pymeId)
+        const data = await getProducts(pymeId);
+        //const data = await getProducts(1123);
+        console.log('data products pyme details',data);
+        setSelectedPymesData(data);
+      } catch (error) {
+        console.error("Error fetching pymes data:", error);
+      }
+    };
+    fetchData();
+    //console.log(selectedPymesData);
+
+  }, [pymeId]);
+
+  useEffect(() => {
+    console.log("selectedPymesData actualizado:",selectedPymesData);
+    /*const pymeEncontrada = selectedPymesData.find((p) => p.id === 1123);
     if (pymeEncontrada) {
       setPyme(pymeEncontrada);
-
-      // Obtener productos de esta PyME
       const productosEncontrados =
-        productosPorPyme[pymeId as keyof typeof productosPorPyme] || [];
+        productosPorPyme[pymeId1 as keyof typeof productosPorPyme] || [];
       setProductos(productosEncontrados);
-    }
-  }, [pymeId]);
+    }*/
+      const pymeEncontrada = selectedPymesData.data; // No es un array, solo un objeto
+      console.log('pymeEncontrada',pymeEncontrada)
+
+      if (!pymeEncontrada || pymeEncontrada.id !== 1123) {
+        console.error("No se encontró la PyME con el ID especificado.");
+      } else {
+        console.log("PyME encontrada:", pymeEncontrada);
+        setPyme(pymeEncontrada);
+      
+        // Acceder a productos directamente desde el objeto
+        const productosEncontrados = pymeEncontrada.productos || [];
+        console.log("Productos encontrados:", productosEncontrados);
+        setProductos(productosEncontrados);
+      }
+  }, [selectedPymesData]); 
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -487,7 +527,7 @@ export default function PymeDetail({ pymeId = 1 }) {
                     }}
                   >
                     <Typography variant="h6" color="primary" fontWeight="bold">
-                      ${producto.precio.toLocaleString("es-MX")}  
+                      ${producto.precio.toLocaleString("es-MX")}
                     </Typography>
                   </Box>
                 </CardContent>
@@ -506,7 +546,6 @@ export default function PymeDetail({ pymeId = 1 }) {
           ))}
         </Grid>
       </Paper>
-      ]
     </Container>
   );
 }

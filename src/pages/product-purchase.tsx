@@ -55,6 +55,7 @@ import {
 } from "@mui/icons-material"
 
 
+
 // Datos de ejemplo de productos
 const productos = {
   101: {
@@ -157,7 +158,7 @@ const bancos = [
   },
 ]
 
-export default function ProductPurchase({ productId = 101 }) {
+export default function ProductPurchase({ productId = 101}) {
   const theme = useTheme()
   const [product, setProduct] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -181,8 +182,10 @@ export default function ProductPurchase({ productId = 101 }) {
   const [formErrors, setFormErrors] = useState<any>({})
   const [orderComplete, setOrderComplete] = useState(false)
   const [orderNumber, setOrderNumber] = useState("")
+  
 
   useEffect(() => {
+    
     // En un caso real, aquí harías una llamada a la API para obtener los datos
     // basados en el ID del producto
     const productoEncontrado = productos[productId as keyof typeof productos]

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Avatar,
   Box,
@@ -34,6 +34,8 @@ import {
   Star,
   AttachMoney,
 } from "@mui/icons-material"
+import { getLineCredit } from '../services/linecreditService';
+import { getProducts } from '../services/productServices';
 
 
 
@@ -66,18 +68,53 @@ function a11yProps(index: number) {
   }
 }
 
-export default function MyPyme() {
+export default function MyPyme({ codigo_cliente = 156468 }) {
   const [tabValue, setTabValue] = useState(0)
   const theme = useTheme()
+  const [selectedLineCreditData, setSelectedLineCreditData] = useState({});
+  const [selectedProductData, setSelectedProductData] = useState({});
+
+  useEffect(() => {
+    // En un caso real, aquí harías una llamada a la API para obtener los datos
+    // basados en el ID de la PyME
+
+    const fetchData = async () => {
+      try {
+        console.log('codigo_cliente', codigo_cliente)
+        const data = await getLineCredit(codigo_cliente);
+        //const data = await getProducts(1123);
+        setSelectedLineCreditData(data.data);
+        console.log('data my pime', data.data);
+        //setSelectedPymesData(data);
+      } catch (error) {
+        console.error("Error fetching pymes data:", error);
+      }
+    };
+    const fetchDataPyme = async () => {
+      try {
+        console.log('codigo_cliente', codigo_cliente)
+        const data = await getProducts(codigo_cliente);
+        setSelectedProductData(data.data);
+        //const data = await getProducts(1123);
+        //setSelectedLineCreditData(data.data);
+        console.log('data my pime', data.data);
+        //setSelectedPymesData(data);
+      } catch (error) {
+        console.error("Error fetching pymes data:", error);
+      }
+    };
+    fetchData();
+    fetchDataPyme();
+    //console.log(selectedPymesData);
+
+  }, [codigo_cliente]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
   }
 
   return (
-    
     <Container maxWidth="lg" sx={{ py: 4 }}>
-
       <Grid container spacing={3}>
         <Grid item xs={12} lg={8}>
           <Box
@@ -96,236 +133,223 @@ export default function MyPyme() {
             />
             <Box>
               <Typography variant="h4" component="h1" fontWeight="bold">
-                Tecnología Innovadora S.A.
+                
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Soluciones tecnológicas para empresas
+                
               </Typography>
             </Box>
           </Box>
-
           <Paper sx={{ width: "100%" }}>
-         
+            <Card sx={{ mb: 3 }}>
+              <CardHeader title="Información de la Empresa" subheader="Detalles generales sobre la empresa" />
+              <CardContent>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    Descripción
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    
+                  </Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    Industria
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    categoria
+                  </Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    Tamaño de la empresa
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    51-200 empleados
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    Año de fundación
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    2010
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
 
-          
-              <Card sx={{ mb: 3 }}>
-                <CardHeader title="Información de la Empresa" subheader="Detalles generales sobre la empresa" />
-                <CardContent>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="medium">
-                      Descripción
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      Tecnología Innovadora S.A. es una empresa líder en el sector tecnológico, especializada en el
-                      desarrollo de soluciones digitales para empresas de todos los tamaños. Fundada en 2010, nuestra
-                      misión es transformar la manera en que las empresas utilizan la tecnología para mejorar sus
-                      operaciones y resultados.
-                    </Typography>
-                  </Box>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="medium">
-                      Industria
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      Tecnología de la Información
-                    </Typography>
-                  </Box>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="medium">
-                      Tamaño de la empresa
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      51-200 empleados
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle1" fontWeight="medium">
-                      Año de fundación
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                      2010
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader title="Servicios Principales" />
-                <CardContent>
-                  <List dense disablePadding>
-                    {[
-                      "Desarrollo de software a medida",
-                      "Consultoría tecnológica",
-                      "Implementación de sistemas ERP",
-                      "Soluciones de ciberseguridad",
-                      "Servicios en la nube",
-                    ].map((service, index) => (
-                      <ListItem key={index} disablePadding sx={{ py: 0.5 }}>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <FiberManualRecord sx={{ fontSize: 8, color: "primary.main" }} />
-                        </ListItemIcon>
-                        <ListItemText primary={service} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
-            
-
-           
-
-            
+            <Card>
+              <CardHeader title="Servicios Principales" />
+              <CardContent>
+                <List dense disablePadding>
+                  {[
+                    "Desarrollo de software a medida",
+                    "Consultoría tecnológica",
+                    "Implementación de sistemas ERP",
+                    "Soluciones de ciberseguridad",
+                    "Servicios en la nube",
+                  ].map((service, index) => (
+                    <ListItem key={index} disablePadding sx={{ py: 0.5 }}>
+                      <ListItemIcon sx={{ minWidth: 30 }}>
+                        <FiberManualRecord sx={{ fontSize: 8, color: "primary.main" }} />
+                      </ListItemIcon>
+                      <ListItemText primary={service} />
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
           </Paper>
         </Grid>
-
         <Grid item xs={12} lg={4}>
-        <Card sx={{ mb: 3 }}>
-                <CardHeader title="Información de Crédito" subheader="Estado crediticio actual de la empresa" />
-                <CardContent>
-                  <Grid container spacing={2} sx={{ mb: 4 }}>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <CreditCard fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Crédito Aprobado
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            $500,000  
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Actualizado: 15/03/2023
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <AttachMoney fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Tasa de Interés
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            12.5%
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Anual
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <Card variant="outlined">
-                        <CardContent>
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            <Star fontSize="small" color="action" sx={{ mr: 1 }} />
-                            <Typography variant="body2" color="text.secondary">
-                              Score Crediticio
-                            </Typography>
-                          </Box>
-                          <Typography variant="h5" fontWeight="bold">
-                            780
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            Excelente
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  </Grid>
-                  <Box sx={{ mb: 2 }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-                      <Typography variant="body2" fontWeight="medium">
-                        Utilización de Crédito
+          <Card sx={{ mb: 3 }}>
+            <CardHeader title="Información de Crédito" subheader="Estado crediticio actual de la empresa" />
+            <CardContent>
+              <Grid container spacing={2} sx={{ mb: 4 }}>
+                <Grid item xs={12} md={4}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                        <CreditCard fontSize="small" color="action" sx={{ mr: 1 }} />
+                        <Typography variant="body2" color="text.secondary">
+                          Crédito Aprobado
+                        </Typography>
+                      </Box>
+                      <Typography variant="h5" fontWeight="bold">
+                        {selectedLineCreditData.total_Credito}
                       </Typography>
-                      <Typography variant="body2">25%</Typography>
-                    </Box>
-                    <LinearProgress variant="determinate" value={25} sx={{ height: 6, borderRadius: 3 }} />
-                  </Box>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" fullWidth>
-                    Solicitar Aumento de Crédito
-                  </Button>
-                </CardActions>
-              </Card>
+                      <Typography variant="caption" color="text.secondary">
+                        Actualizado: 15/03/2023
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                        <AttachMoney fontSize="small" color="action" sx={{ mr: 1 }} />
+                        <Typography variant="body2" color="text.secondary">
+                          Tasa de Interés
+                        </Typography>
+                      </Box>
+                      <Typography variant="h5" fontWeight="bold">
+                        {selectedLineCreditData.total_Credito}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Anual
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                        <Star fontSize="small" color="action" sx={{ mr: 1 }} />
+                        <Typography variant="body2" color="text.secondary">
+                          Score Crediticio
+                        </Typography>
+                      </Box>
+                      <Typography variant="h5" fontWeight="bold">
+                        780
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Excelente
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+              <Box sx={{ mb: 2 }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+                  <Typography variant="body2" fontWeight="medium">
+                    Utilización de Crédito
+                  </Typography>
+                  <Typography variant="body2">25%</Typography>
+                </Box>
+                <LinearProgress variant="determinate" value={25} sx={{ height: 6, borderRadius: 3 }} />
+              </Box>
+            </CardContent>
+            <CardActions>
+              <Button variant="contained" fullWidth>
+                Solicitar Aumento de Crédito
+              </Button>
+            </CardActions>
+          </Card>
 
           <Card sx={{ mb: 3 }}>
-                <CardHeader title="Información de Contacto" />
-                <CardContent>
-                  <List>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Business />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Dirección"
-                        secondary={
-                          <>
-                            Av. Reforma 123, Col. Juárez
-                            <br />
-                            Ciudad de México, CP 06600
-                            <br />
-                            México
-                          </>
-                        }
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Phone />
-                      </ListItemIcon>
-                      <ListItemText primary="Teléfono" secondary="+52 (55) 1234-5678" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <Email />
-                      </ListItemIcon>
-                      <ListItemText primary="Correo Electrónico" secondary="contacto@tecnologiainnovadora.mx" />
-                    </ListItem>
-                  </List>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" fullWidth>
-                    Contactar
-                  </Button>
-                </CardActions>
-              </Card>
+            <CardHeader title="Información de Contacto" />
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemIcon>
+                    <Business />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Dirección"
+                    secondary={
+                      <>
+                        Av. Reforma 123, Col. Juárez
+                        <br />
+                        Ciudad de México, CP 06600
+                        <br />
+                        México
+                      </>
+                    }
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <Phone />
+                  </ListItemIcon>
+                  <ListItemText primary="Teléfono" secondary="+52 (55) 1234-5678" />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <Email />
+                  </ListItemIcon>
+                  <ListItemText primary="Correo Electrónico" secondary="contacto@tecnologiainnovadora.mx" />
+                </ListItem>
+              </List>
+            </CardContent>
+            <CardActions>
+              <Button variant="contained" fullWidth>
+                Contactar
+              </Button>
+            </CardActions>
+          </Card>
 
-              <Card>
-                <CardHeader title="Representante de Cuenta" />
-                <CardContent>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Avatar
-                      src="/placeholder.svg?height=64&width=64"
-                      alt="Representante"
-                      sx={{ width: 64, height: 64 }}
-                    />
-                    <Box>
-                      <Typography variant="subtitle1" fontWeight="medium">
-                        Carlos Rodríguez
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Gerente de Cuentas Corporativas
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        carlos.rodriguez@tecnologiainnovadora.mx
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        +52 (55) 1234-5678 ext. 123
-                      </Typography>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
+          <Card>
+            <CardHeader title="Representante de Cuenta" />
+            <CardContent>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Avatar
+                  src="/placeholder.svg?height=64&width=64"
+                  alt="Representante"
+                  sx={{ width: 64, height: 64 }}
+                />
+                <Box>
+                  <Typography variant="subtitle1" fontWeight="medium">
+                    Carlos Rodríguez
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Gerente de Cuentas Corporativas
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    carlos.rodriguez@tecnologiainnovadora.mx
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    +52 (55) 1234-5678 ext. 123
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
 
 
-          
+
         </Grid>
       </Grid>
     </Container>
