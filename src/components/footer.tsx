@@ -7,19 +7,19 @@ const Footer = () => {
   const theme = useTheme(); // Obtiene los colores del theme
 
   return (
-    <Box sx={{ bgcolor: theme.palette.primary.dark, color: "white" }}>
+    <Box sx={{ bgcolor: "#160f41", color: "white", py: 6 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Sección de información */}
           <Grid item xs={12} md={4}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
-              Comunidad PyMEs
+              Comunidad PYMEGO
             </Typography>
             <Typography variant="body2" sx={{ opacity: 0.8 }}>
               Una iniciativa de Banco Guayaquil para impulsar el crecimiento de las pequeñas y medianas empresas ecuatorianas.
             </Typography>
             <Box sx={{ mt: 2 }}>
-              <img src="/placeholder.svg?height=60&width=180&text=BANCO GUAYAQUIL" alt="Banco Guayaquil" style={{ height: 40 }} />
+              <img src="https://www.bancoguayaquil.com/static/1f7d8003e7b7de4c0244b5d4116dd882/63159/logo_bg_white.png" alt="Banco Guayaquil" style={{ height: 40 }} />
             </Box>
           </Grid>
 
