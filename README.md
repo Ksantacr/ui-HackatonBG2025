@@ -1,30 +1,57 @@
-# React + TypeScript + Vite
+# UI Hackaton BG2025
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es parte de la Hackaton BG2025 y consiste en una aplicación web desarrollada con **React**. La aplicación utiliza **React Router v6** para el manejo de rutas y **Material UI (MUI)** para la interfaz de usuario. Además, se conecta con **AWS Cognito** para la autenticación de usuarios y consume una API desarrollada en **.NET** para obtener datos y funcionalidades adicionales.
 
-Currently, two official plugins are available:
+## Descripción
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La aplicación cuenta con las siguientes características principales:
 
-## Expanding the ESLint configuration
+- **Autenticación con AWS Cognito:**
+  Gestión de inicio de sesión y cierre de sesión a través de AWS Cognito. Los usuarios autenticados tienen acceso a rutas protegidas, mientras que las páginas públicas (como el login) se muestran sin el layout principal.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Consumo de API en .NET:**
+  La aplicación se integra con una API desarrollada en .NET para consumir datos y funcionalidades necesarias para el funcionamiento de la plataforma. Mas información: https://github.com/Ksantacr/HackatonBG2025
 
-- Configure the top-level `parserOptions` property like this:
+- **Routing con React Router v6:**
+  Uso de rutas anidadas para aplicar un layout específico a las páginas protegidas. Esto permite que la página de login se muestre sin el encabezado y el pie de página definidos en el layout principal.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Interfaz de usuario con Material UI:**
+  Utilización de MUI para diseñar una interfaz moderna, con temas que permiten ajustar colores y estilos de manera coherente en toda la aplicación.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Instalación
+
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
+
+1. **Clonar el repositorio:**
+
+   ```bash
+   git clone https://github.com/Ksantacr/ui-HackatonBG2025.git
+   cd ui-HackatonBG2025
+
+2. **Instalar las dependencias:**
+
+Utiliza npm o yarn:
+
+    ```bash
+    npm install
+
+    ```bash
+    yarn install
+
+3. **Ejecutar la aplicación en modo desarrollo:**
+
+    ```bash
+    npm run dev
+
+
+## Tecnologías utilizadas
+- React
+- React Router
+- Material UI (MUI)
+- TypeScript (según la extensión de archivos y prácticas observadas)
+- Integración con Cognito
+- Axios
+
+## Licencia
+
+Este proyecto se distribuye bajo la [Licencia Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
