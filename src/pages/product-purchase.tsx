@@ -54,8 +54,6 @@ import {
   Wallet,
 } from "@mui/icons-material"
 
-
-
 // Datos de ejemplo de productos
 const productos = {
   101: {
@@ -64,10 +62,10 @@ const productos = {
     descripcion:
       "Evaluación médica completa con un médico general certificado. Incluye historial médico, examen físico y recomendaciones de tratamiento.",
     descripcionLarga:
-      "La consulta médica general es una evaluación integral de su estado de salud realizada por un médico general certificado. Durante la consulta, el médico realizará un historial médico completo, un examen físico detallado y proporcionará recomendaciones de tratamiento personalizadas. Esta consulta es ideal para chequeos regulares, diagnóstico de enfermedades comunes, seguimiento de condiciones crónicas o para obtener referencias a especialistas si es necesario. Nuestros médicos están altamente capacitados para brindar atención de calidad y responder a todas sus preguntas e inquietudes relacionadas con su salud.",
+      "La consulta médica general es una evaluación integral de su estado de salud realizada por un médico general certificado. Durante la consulta, el médico realizará un historial médico completo, un examen físico detallado y proporcionará recomendaciones de tratamiento personalizadas.",
     precio: 800,
     precioRegular: 950,
-    imagen: "/placeholder.svg?height=400&width=600",
+    imagen: "https://blog.humana.med.ec/hs-fs/hubfs/empresa-beneficios-plan-medico-y-salud-medicina-prepagada-contratar-plan-empresarial-corporativo.jpg?width=800&name=empresa-beneficios-plan-medico-y-salud-medicina-prepagada-contratar-plan-empresarial-corporativo.jpg",
     categoria: "Consultas",
     disponibilidad: "Inmediata",
     duracion: "30 minutos",
@@ -116,7 +114,7 @@ const productos = {
       "Resultados precisos con tecnología de última generación",
       "Interpretación médica de resultados disponible",
     ],
-   
+
     contraindicaciones: "No aplica",
     incluye: [
       "Toma de muestra sanguínea",
@@ -182,10 +180,10 @@ export default function ProductPurchase({ productId = 101}) {
   const [formErrors, setFormErrors] = useState<any>({})
   const [orderComplete, setOrderComplete] = useState(false)
   const [orderNumber, setOrderNumber] = useState("")
-  
+
 
   useEffect(() => {
-    
+
     // En un caso real, aquí harías una llamada a la API para obtener los datos
     // basados en el ID del producto
     const productoEncontrado = productos[productId as keyof typeof productos]
@@ -324,12 +322,12 @@ export default function ProductPurchase({ productId = 101}) {
       {/* Breadcrumbs y botón de regreso */}
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Breadcrumbs aria-label="breadcrumb">
-         
-          
+
+
           <Typography color="text.primary">{product.nombre}</Typography>
         </Breadcrumbs>
         <Button
-         
+
           href={`/pyme/${product.pymeId}`}
           startIcon={<ArrowBack />}
           variant="outlined"
@@ -369,7 +367,7 @@ export default function ProductPurchase({ productId = 101}) {
                     objectFit: "cover",
                   }}
                 />
-               
+
               </Box>
               <Box sx={{ p: 3 }}>
                 <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
@@ -383,20 +381,20 @@ export default function ProductPurchase({ productId = 101}) {
                   {product.nombre}
                 </Typography>
 
-               
+
 
                 <Typography variant="body1" paragraph>
                   {product.descripcionLarga}
                 </Typography>
-              
+
                 <Grid container spacing={3}>
-                  
-                  
+
+
                 </Grid>
 
-                
 
-                
+
+
               </Box>
             </Paper>
           </Grid>
@@ -411,9 +409,9 @@ export default function ProductPurchase({ productId = 101}) {
 
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
                   <Typography variant="h4" color="primary" fontWeight="bold">
-                    ${product.precio.toLocaleString("es-MX")} 
+                    ${product.precio.toLocaleString("es-MX")}
                   </Typography>
-                 
+
                 </Box>
 
                 <FormControl fullWidth sx={{ mb: 3 }}>
@@ -451,7 +449,7 @@ export default function ProductPurchase({ productId = 101}) {
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold" color="primary">
-                    ${calculateTotal().toLocaleString("es-MX")} 
+                    ${calculateTotal().toLocaleString("es-MX")}
                   </Typography>
                 </Box>
 
@@ -503,7 +501,7 @@ export default function ProductPurchase({ productId = 101}) {
                       <Box sx={{ pl: 4, mt: 2 }}>
                         <Alert severity="info" sx={{ mb: 2 }}>
                           <Typography variant="body2">
-                            Crédito disponible: ${creditoDisponible.monto.toLocaleString("es-MX")} 
+                            Crédito disponible: ${creditoDisponible.monto.toLocaleString("es-MX")}
                           </Typography>
                           <Typography variant="body2">
                             Tasa de interés anual: {creditoDisponible.tasaInteres}%
@@ -532,10 +530,10 @@ export default function ProductPurchase({ productId = 101}) {
 
                         <Box sx={{ bgcolor: theme.palette.primary.main, color: "white", p: 2, borderRadius: 1 }}>
                           <Typography variant="subtitle1">
-                            Pago mensual estimado: ${calculateMonthlyPayment().toFixed(2)} 
+                            Pago mensual estimado: ${calculateMonthlyPayment().toFixed(2)}
                           </Typography>
                           <Typography variant="body2">
-                            Total a pagar: ${(calculateMonthlyPayment() * creditPeriod).toFixed(2)} 
+                            Total a pagar: ${(calculateMonthlyPayment() * creditPeriod).toFixed(2)}
                           </Typography>
                         </Box>
                       </Box>
@@ -827,7 +825,7 @@ export default function ProductPurchase({ productId = 101}) {
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold" color="primary">
-                    ${calculateTotal().toLocaleString("es-MX")}  
+                    ${calculateTotal().toLocaleString("es-MX")}
                   </Typography>
                 </Box>
 
@@ -923,7 +921,7 @@ export default function ProductPurchase({ productId = 101}) {
                         Total pagado:
                       </Typography>
                       <Typography variant="body1" fontWeight="bold" color="primary" gutterBottom>
-                        ${calculateTotal().toLocaleString("es-MX")}  
+                        ${calculateTotal().toLocaleString("es-MX")}
                       </Typography>
                     </Grid>
                   </Grid>

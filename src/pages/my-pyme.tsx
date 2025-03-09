@@ -68,7 +68,7 @@ function a11yProps(index: number) {
   }
 }
 
-export default function MyPyme({ codigo_cliente = 156468 }) {
+export default function MyPyme({ codigo_cliente = "156468" }) {
   const [tabValue, setTabValue] = useState(0)
   const theme = useTheme()
   const [selectedLineCreditData, setSelectedLineCreditData] = useState({});
@@ -83,8 +83,8 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
         console.log('codigo_cliente', codigo_cliente)
         const data = await getLineCredit(codigo_cliente);
         //const data = await getProducts(1123);
-        setSelectedLineCreditData(data.data);
-        console.log('data my pime', data.data);
+        setSelectedLineCreditData(data);
+        console.log('data my pime', data);
         //setSelectedPymesData(data);
       } catch (error) {
         console.error("Error fetching pymes data:", error);
@@ -94,10 +94,10 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
       try {
         console.log('codigo_cliente', codigo_cliente)
         const data = await getProducts(codigo_cliente);
-        setSelectedProductData(data.data);
+        setSelectedProductData(data);
         //const data = await getProducts(1123);
         //setSelectedLineCreditData(data.data);
-        console.log('data my pime', data.data);
+        console.log('data my pime', data);
         //setSelectedPymesData(data);
       } catch (error) {
         console.error("Error fetching pymes data:", error);
@@ -133,10 +133,10 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
             />
             <Box>
               <Typography variant="h4" component="h1" fontWeight="bold">
-                
+
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                
+
               </Typography>
             </Box>
           </Box>
@@ -149,7 +149,7 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
                     Descripción
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                    
+
                   </Typography>
                 </Box>
                 <Box sx={{ mb: 2 }}>
@@ -217,7 +217,8 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
                         </Typography>
                       </Box>
                       <Typography variant="h5" fontWeight="bold">
-                        {selectedLineCreditData.total_Credito}
+                        {/* {selectedLineCreditData.total_Credito} */}
+                        10,000
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
                         Actualizado: 15/03/2023
@@ -235,7 +236,8 @@ export default function MyPyme({ codigo_cliente = 156468 }) {
                         </Typography>
                       </Box>
                       <Typography variant="h5" fontWeight="bold">
-                        {selectedLineCreditData.total_Credito}
+                        {/* {selectedLineCreditData.total_Credito} */}
+                        10,000
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
                         Anual

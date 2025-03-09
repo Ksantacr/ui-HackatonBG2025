@@ -1,5 +1,8 @@
+import { Contactabilidad } from "./contactabilidad";
+import { Product } from "./product";
+
 export interface Pyme{
-    id_cliente: string;
+    idCliente: string;
     nombre: string;
     ruc: string;
     descripcion: string;

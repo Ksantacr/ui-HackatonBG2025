@@ -6,8 +6,8 @@ export interface Contactabilidad{
     calle_secundaria?: string;
     numero?: string;
     referencia?: string;
-    latitud?: string;
-    longitud?: string;
+    latitud?: number;
+    longitud?: number;
     email1?: string;
     email2?: string;
     telefono1?: string;

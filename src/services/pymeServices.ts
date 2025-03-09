@@ -1,4 +1,5 @@
 import apiPyme from "../api/apiPyme";
+import { Data } from "../types/data";
 import { Pyme } from "../types/pyme";
 
 /*const mockContactabilidad: Contactabilidad = {
@@ -10,7 +11,7 @@ import { Pyme } from "../types/pyme";
 };
 
 const mockInfo: Info = {
-  id_cliente: 156464,
+  idCliente: 156464,
   nombre: "Contoso S.A.",
   ruc: "0987654321001",
   descripcion: "Descripcion de la empresa",
@@ -82,7 +83,7 @@ export const getPymes = async (
       params: { query, pais, ciudad, provincia }
     });
     console.log('response', response.data);
-    return response.data; 
+    return response.data;
   } catch (error) {
     console.error("Error en la petición:", error);
     throw new Error("No se pudieron obtener las pymes");

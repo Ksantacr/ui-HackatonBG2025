@@ -1,6 +1,7 @@
 import apiPyme from "../api/apiPyme";
+import { Data } from "../types/data";
 
-export const getLineCredit = async (codigo_cliente: number): Promise<Data[]> => {
+export const getLineCredit = async (codigo_cliente: string): Promise<Data[]> => {
     console.log('codigo cliente getLineCredit:', codigo_cliente);
     try {
         const response = await apiPyme.get<Data[]>(`/linea-credito`, {

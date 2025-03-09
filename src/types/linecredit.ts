@@ -1,5 +1,5 @@
 export interface LineCredit{
-    id_Cliente: number;
+    idCliente: number;
     total_Credito: string;
     utilizado: string;
     disponible: string;
