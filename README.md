@@ -32,17 +32,21 @@ Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
 Utiliza npm o yarn:
 
-    ```bash
-    npm install
+```bash
+npm install
+```
 
-    ```bash
-    yarn install
+O
+
+```bash
+yarn install
+```
 
 3. **Ejecutar la aplicación en modo desarrollo:**
 
-    ```bash
-    npm run dev
-
+```bash
+npm run dev
+```
 
 ## Tecnologías utilizadas
 - React
