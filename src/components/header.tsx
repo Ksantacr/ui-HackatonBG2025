@@ -1,159 +1,94 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import React, { useState } from "react";
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { AppBar, Stack, Divider, IconButton, Toolbar, Typography, Tabs, Tab, Grid, Avatar, Box } from "@mui/material";
+import { LogoutOutlined } from "@mui/icons-material";
+import { Link, useLocation } from "react-router-dom";
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+import { useTheme } from "@mui/material/styles";
+import PropTypes from "prop-types";
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+// Componente para crear enlaces dentro de Tabs
+function LinkTab(props) {
+  return (
+    <Tab
+      component={Link}
+      to={props.to}
+      aria-current={props.selected ? "page" : undefined}
+      {...props}
+    />
+  );
+}
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+LinkTab.propTypes = {
+  label: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  selected: PropTypes.bool,
+};
+
+const ResponsiveAppBar = () => {
+
+  const location = useLocation(); // Obtiene la ruta actual
+  const theme = useTheme(); // Obtiene colores del theme
+  const [selectedTab, setSelectedTab] = useState(location.pathname); // Estado de pestaña activa
+
+
+
+  const handleChange = (event, newValue) => {
+    setSelectedTab(newValue);
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+    <AppBar
+      position="fixed"
+      color="transparent"
+      enableColorOnDark
+      sx={{
+        p: 1,
+        backdropFilter: "blur(10px)", // Desenfoque para efecto Glassmorphism
+        bgcolor: "#D2006E", // Fondo translúcido
+        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)", // Sombra suave
+        border: "1px solid rgba(255, 255, 255, 0.3)", // Borde sutil
+      }}
+    >
+      <Toolbar>
+        <Grid container justifyContent="space-between" alignItems="center">
+          {/* Logo */}
+          <Grid item>
+            <img src="https://www.bancoguayaquil.com/static/1f7d8003e7b7de4c0244b5d4116dd882/63159/logo_bg_white.png" alt="Logo" style={{ height: 50, padding: 2 }} />
+          </Grid>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+          {/* Navegación con Tabs */}
+          <Grid item>
+            <Tabs
+              value={selectedTab}
+              onChange={handleChange}
+              textColor="primary"
+              indicatorColor="secondary"
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <LinkTab label="Inicio" to="/home" selected={selectedTab === "/home"} value="/home"  />
+              <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"} value="/community" />
+              <LinkTab label="Pymes" to="/pyme-details" selected={selectedTab === "/pyme-details"} value="/pyme-details" />
+            </Tabs>
+          </Grid>
+
+          {/* Avatar, Nombre y Logout */}
+          <Grid item>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="subtitle1" color={theme.palette.text.primary}>
+               Bienvenido
+              </Typography>
+              <Avatar alt="User" src="https://i.pravatar.cc/40" />
+              <Divider orientation="vertical" flexItem />
+              <IconButton  color="primary" size="small">
+                <LogoutOutlined />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Toolbar>
     </AppBar>
   );
-}
+};
+
 export default ResponsiveAppBar;
