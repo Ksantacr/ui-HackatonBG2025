@@ -21,7 +21,7 @@ const App = () => {
 
         {/* Protected routes wrapped with MainLayout */}
         <Route element={<MainLayout />}>
-          <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
+          <Route path="/" element={isAuthenticated() ? <Navigate replace to="/landing-page" /> : <Navigate replace to="/login" />} />
           <Route path="/community" element={<Community />} />
           <Route path="/pyme-details" element={<PymeDetail />} />
           <Route path="/landing-page" element={<HomePage />} />

@@ -219,7 +219,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <Box
         sx={{
-          background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/placeholder.svg?height=800&width=1600')`,
+          background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(22, 15, 65, 0.7)), url('https://www.bancoguayaquil.com/static/99f569c1b35ed6741dcded78803fd2d8/9c00f/Por-que-ahorrar-en-un-banco-es-tu-opcion-mas-segura.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "white",
@@ -239,7 +239,7 @@ export default function HomePage() {
                   fontSize: { xs: "2.5rem", md: "3.5rem" },
                 }}
               >
-                Impulsando el Crecimiento de las PyMEs Ecuatorianas
+                Impulsando el Crecimiento de las Pymes Ecuatorianas
               </Typography>
               <Typography
                 variant="h5"
@@ -300,19 +300,19 @@ export default function HomePage() {
                 <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                   <AccountBalance color="primary" sx={{ fontSize: 40, mr: 2 }} />
                   <Typography variant="h5" fontWeight="bold" color="primary">
-                    Respaldo Financiero
+                    Comunidad exclusiva
                   </Typography>
                 </Box>
                 <Typography variant="body1" paragraph>
-                  Accede a financiamiento preferencial, asesoría financiera y herramientas exclusivas para el
+                  Accede a financiamiento preferencial, asesoría financiera y conexión para el
                   crecimiento de tu negocio.
                 </Typography>
                 <List dense>
                   {[
-                    "Tasas preferenciales desde 8.5%",
-                    "Plazos flexibles hasta 60 meses",
-                    "Período de gracia adaptado a tu negocio",
-                    "Aprobación rápida en 48 horas",
+                    "Tasas preferenciales",
+                    "Pymes Verificadas",
+                    "Análisis de mercado",
+                    "Garantía de respaldo",
                   ].map((item, index) => (
                     <ListItem key={index} disablePadding sx={{ mb: 0.5 }}>
                       <ListItemIcon sx={{ minWidth: 30 }}>
@@ -400,7 +400,7 @@ export default function HomePage() {
           <Grid item xs={12} md={6}>
             <Box
               component="img"
-              src="/placeholder.svg?height=600&width=800"
+              src="https://www.bancoguayaquil.com/static/f39db5cd31b34d606c41c0dc799daa10/70f2d/Desktop6_2916x1489x150px.webp"
               alt="Comunidad de PyMEs"
               sx={{
                 width: "100%",
@@ -536,7 +536,7 @@ export default function HomePage() {
             <Grid item xs={12} md={5}>
               <Box
                 component="img"
-                src="/placeholder.svg?height=600&width=600"
+                src="https://www.bancoguayaquil.com/static/f809ace18c9a6a782e6f2f61970b5b52/70f2d/Desktop6_2916x1489x150px.webp"
                 alt="Cadena de valor"
                 sx={{
                   width: "100%",

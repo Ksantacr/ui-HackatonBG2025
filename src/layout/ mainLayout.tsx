@@ -23,7 +23,8 @@ const MainLayout = () => {
           sx={{
             // You can add styling here if needed, for example:
             flex: 1,
-            padding: "20px",
+            padding: "0px",
+            width: "100%",
           }}
         >
           <Outlet /> {/* Render nested route elements here */}

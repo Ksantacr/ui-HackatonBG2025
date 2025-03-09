@@ -256,9 +256,9 @@ export default function Community() {
     
     <Container maxWidth="lg" sx={{ py: 4 }}>
        <HeroSection
-        title="Marketplace de PyMEs"
+        title="Comunidad de Pymes"
         subtitle="Descubre productos y servicios de calidad ofrecidos por pequeñas y medianas empresas ecuatorianas. Apoya el emprendimiento local."
-        backgroundImage="/placeholder.svg?height=800&width=1600&text=MARKETPLACE"
+        backgroundImage="https://www.bancoguayaquil.com/static/f809ace18c9a6a782e6f2f61970b5b52/70f2d/Desktop6_2916x1489x150px.webp"
         primaryButtonText="Explorar Productos"
         secondaryButtonText="Vender en el Marketplace"
         overlay={0.75}
@@ -270,7 +270,7 @@ export default function Community() {
               gap: 3,
               mt: 4,
               p: 3,
-              bgcolor: "rgba(0,0,0,0.5)",
+              bgcolor: "rgba(22, 15, 65, 0.7)",
               borderRadius: 2,
               backdropFilter: "blur(10px)",
               maxWidth: { xs: "100%", md: "600px" },
