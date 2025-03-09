@@ -1,5 +1,5 @@
 "use client";
-
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import {
   Avatar,
@@ -299,11 +299,18 @@ function a11yProps(index: number) {
   };
 }
 
+
+
+
 export default function PymeDetail({ pymeId = 1 }) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [pyme, setPyme] = useState<any>(null);
   const [productos, setProductos] = useState<any[]>([]);
+  const handleBuyNowClick = () => {
+    navigate("/product-purchase"); // Redirige a la página de compra
+  };
 
   useEffect(() => {
     // En un caso real, aquí harías una llamada a la API para obtener los datos
@@ -489,8 +496,9 @@ export default function PymeDetail({ pymeId = 1 }) {
                     variant="contained"
                     fullWidth
                     startIcon={<ShoppingCart />}
+                    onClick={handleBuyNowClick}
                   >
-                    Solicitar
+                    Comprar ahora
                   </Button>
                 </CardActions>
               </Card>

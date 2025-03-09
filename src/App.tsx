@@ -3,13 +3,13 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './loginPage';
-import HomePage from './homePage';
+import HomePage from './pages/home-page';
 import ConfirmUserPage from './confirmUserPage';
-import './App.css'
 import MainLayout from "./layout/ mainLayout";
 import Community from './pages/community';
 import PymeDetail from './pages/pyme-datails';
 import ProductPurchase from './pages/product-purchase';
+import MyPyme from './pages/my-pyme';
 
 const App = () => {
   const isAuthenticated = () => {
@@ -23,9 +23,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/confirm" element={<ConfirmUserPage />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/pyme-details" element={<PymeDetail/>} />
+        <Route path="/landing-page" element={<HomePage />} />
+        <Route path="/my-pyme" element={<MyPyme />} />
         <Route path="/home" element={isAuthenticated() ? <ProductPurchase/>: <Navigate replace to="/login" />} />
         <Route path="*" element={<Navigate to="/home" replace={true} />}
+        
         
         
     />
