@@ -66,9 +66,9 @@ const ResponsiveAppBar = () => {
               textColor="primary"
               indicatorColor="secondary"
             >
-              <LinkTab label="Inicio" to="/home" selected={selectedTab === "/home"} value="/home"  />
+              <LinkTab label="Inicio" to="/landing-page" selected={selectedTab === "/landing-page"} value="/landing-page"  />
               <LinkTab label="Comunidad" to="/community" selected={selectedTab === "/community"} value="/community" />
-              <LinkTab label="Pymes" to="/pyme-details" selected={selectedTab === "/pyme-details"} value="/pyme-details" />
+              <LinkTab label="Mi Pyme" to="/my-pyme" selected={selectedTab === "/my-pyme"} value="/my-pyme" />
             </Tabs>
           </Grid>
 

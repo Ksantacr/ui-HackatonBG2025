@@ -2,6 +2,8 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Button,
@@ -34,7 +36,7 @@ import {
   useTheme,
 } from "@mui/material"
 import { Email, FilterList, FmdGood, LocalHospital, Phone, Search } from "@mui/icons-material"
-
+import HeroSection from "../components/hero-section"
 // Datos de ejemplo de pymes en el sector médico
 const pymesMedicas = [
   {
@@ -214,9 +216,10 @@ export default function Community() {
     setPage(1) // Reset to first page on new filter
   }
 
-  const handleContactClick = (pyme: any) => {
+  const handleContactClick = (pyme) => {
     setSelectedPyme(pyme)
-    setContactDialogOpen(true)
+    // navigate(`/pyme-details/${pyme.id}`); 
+    navigate(`/pyme-details`); 
   }
 
   const handleCloseDialog = () => {
@@ -227,15 +230,63 @@ export default function Community() {
     setPage(value)
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
+  const navigate = useNavigate();
+
+  
 
   return (
+    
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
+       <HeroSection
+        title="Marketplace de PyMEs"
+        subtitle="Descubre productos y servicios de calidad ofrecidos por pequeñas y medianas empresas ecuatorianas. Apoya el emprendimiento local."
+        backgroundImage="/placeholder.svg?height=800&width=1600&text=MARKETPLACE"
+        primaryButtonText="Explorar Productos"
+        secondaryButtonText="Vender en el Marketplace"
+        overlay={0.75}
+        children={
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 3,
+              mt: 4,
+              p: 3,
+              bgcolor: "rgba(0,0,0,0.5)",
+              borderRadius: 2,
+              backdropFilter: "blur(10px)",
+              maxWidth: { xs: "100%", md: "600px" },
+              mx: { xs: "auto", md: 0 },
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ fontSize: 40, mr: 2, color: "primary.main" }} />
+              <Box>
+                <Typography variant="h6" fontWeight="bold">
+                  +5,000
+                </Typography>
+                <Typography variant="body2">Productos disponibles</Typography>
+              </Box>
+            </Box>
+            <Divider orientation="vertical" flexItem sx={{ bgcolor: "rgba(255,255,255,0.3)" }} />
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ fontSize: 40, mr: 2, color: "primary.main" }} />
+              <Box>
+                <Typography variant="h6" fontWeight="bold">
+                  +500
+                </Typography>
+                <Typography variant="body2">PyMEs registradas</Typography>
+              </Box>
+            </Box>
+          </Box>
+        }
+      />
+      <Box sx={{ mb: 4 , py:4 }}>
         <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
-          Directorio de PyMEs Médicas
+          Comunidad Pymes 
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Encuentra y contacta con pequeñas y medianas empresas del sector médico
+          Encuentra y contacta con pequeñas y medianas empresas de cualquier sector
         </Typography>
       </Box>
 
@@ -323,12 +374,9 @@ export default function Community() {
                       {pyme.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
                     </Typography>
                   </CardContent>
-                  <CardActions sx={{ justifyContent: "space-between", p: 2, pt: 0 }}>
-                    <Button variant="outlined" size="small" href={`mailto:${pyme.email}`} startIcon={<Email />}>
-                      Email
-                    </Button>
+                  <CardActions sx={{ justifyContent: "space-between", alignSelf:"center", p: 2, pt: 0 }}>
                     <Button variant="contained" size="small" onClick={() => handleContactClick(pyme)}>
-                      Contactar
+                      Ver productos
                     </Button>
                   </CardActions>
                 </Card>
@@ -353,112 +401,6 @@ export default function Community() {
         </Paper>
       )}
 
-      {/* Diálogo de contacto */}
-      <Dialog open={contactDialogOpen} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogTitle>Contactar a {selectedPyme?.nombre}</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
-              {selectedPyme && (
-                <img
-                  src={selectedPyme.imagen || "/placeholder.svg"}
-                  alt={selectedPyme.nombre}
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    height: "auto",
-                    objectFit: "cover",
-                  }}
-                />
-              )}
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              {selectedPyme && (
-                <>
-                  <Typography variant="h6" gutterBottom>
-                    {selectedPyme.nombre}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" paragraph>
-                    {selectedPyme.descripcion}
-                  </Typography>
-                  <List dense>
-                    <ListItem disablePadding sx={{ mb: 1 }}>
-                      <ListItemAvatar sx={{ minWidth: 40 }}>
-                        <LocalHospital fontSize="small" color="primary" />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={`${selectedPyme.rubro} - ${selectedPyme.especialidad}`}
-                        primaryTypographyProps={{ variant: "body2" }}
-                      />
-                    </ListItem>
-                    <ListItem disablePadding sx={{ mb: 1 }}>
-                      <ListItemAvatar sx={{ minWidth: 40 }}>
-                        <FmdGood fontSize="small" color="action" />
-                      </ListItemAvatar>
-                      <ListItemText primary={selectedPyme.ubicacion} primaryTypographyProps={{ variant: "body2" }} />
-                    </ListItem>
-                    <ListItem disablePadding sx={{ mb: 1 }}>
-                      <ListItemAvatar sx={{ minWidth: 40 }}>
-                        <Phone fontSize="small" color="action" />
-                      </ListItemAvatar>
-                      <ListItemText primary={selectedPyme.telefono} primaryTypographyProps={{ variant: "body2" }} />
-                    </ListItem>
-                    <ListItem disablePadding>
-                      <ListItemAvatar sx={{ minWidth: 40 }}>
-                        <Email fontSize="small" color="action" />
-                      </ListItemAvatar>
-                      <ListItemText primary={selectedPyme.email} primaryTypographyProps={{ variant: "body2" }} />
-                    </ListItem>
-                  </List>
-                </>
-              )}
-            </Grid>
-          </Grid>
-
-          <Divider sx={{ my: 3 }} />
-
-          <Typography variant="subtitle1" gutterBottom>
-            Enviar mensaje
-          </Typography>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Tu nombre"
-            type="text"
-            fullWidth
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            id="email"
-            label="Tu correo electrónico"
-            type="email"
-            fullWidth
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            id="message"
-            label="Mensaje"
-            type="text"
-            fullWidth
-            variant="outlined"
-            multiline
-            rows={4}
-          />
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 3 }}>
-          <Button onClick={handleCloseDialog} variant="outlined">
-            Cancelar
-          </Button>
-          <Button variant="contained" onClick={handleCloseDialog}>
-            Enviar mensaje
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   )
 }

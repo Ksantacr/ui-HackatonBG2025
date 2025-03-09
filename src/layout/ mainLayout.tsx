@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -22,17 +23,19 @@ const MainLayout = ({ children }: LayoutProps) => {
     >
       <Header />
       <Box
-        component="main"
+        // component="main"
         sx={{
-          flex: 1,
-          padding: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          // flex: 1,
+          // padding: "20px",
+          // display: "flex",
+          // justifyContent: "center",
+          // minWidth:"100%",
+          // alignItems: "center",
         }}
       >
         {children}
       </Box>
+      <Footer />    
     </Box>
   );
 };
