@@ -1,5 +1,10 @@
 import apiPyme from "../api/apiPyme";
+import { Contactabilidad } from "../types/contactabilidad";
+import { Data } from "../types/data";
+import { Info } from "../types/info";
+import { Product } from "../types/product";
 import { Pyme } from "../types/pyme";
+import { Respuesta } from "../types/respuesta";
 
 const mockContactabilidad: Contactabilidad = {
     pais: "Ecuador",
@@ -16,9 +21,9 @@ const mockContactabilidad: Contactabilidad = {
     telefono1: "0991234567",
     telefono2: "0421234567"
   };
-  
+
   const mockInfo: Info = {
-    id_cliente: 156464,
+    idCliente: 156464,
     nombre: "Contoso S.A.",
     ruc: "0987654321001",
     descripcion: "Descripcion de la empresa",
@@ -27,8 +32,8 @@ const mockContactabilidad: Contactabilidad = {
     calificacion: 4.5,
     contactabilidad: mockContactabilidad
   };
-  
-  const mockProductos: Producto[] = [
+
+  const mockProductos: Product[] = [
     {
       idProducto: "f7b3b2b1-5b7b-4b3b-8b7b-2b1b3b4b5b7b",
       nombre: "Producto 1",
@@ -54,21 +59,21 @@ const mockContactabilidad: Contactabilidad = {
       categoria: "Medicina"
     }
   ];
-  
+
   const mockData: Data = {
     info: mockInfo,
     productos: mockProductos
   };
-  
+
   const mockRespuesta: Respuesta = {
     code: 200,
     traceId: "0HM1V2JL",
     data: mockData
   };
-  
+
   console.log(mockRespuesta);
-  
-  
+
+
 function simulateApiResponse<T>(data: T, delay = 1000): Promise<T> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -78,10 +83,10 @@ function simulateApiResponse<T>(data: T, delay = 1000): Promise<T> {
   }
 
 export const getProductsSimulation = async (): Promise<Data[]> => {
-    return simulateApiResponse([mockRespuesta]);
+    return simulateApiResponse([mockRespuesta.data]);
   };
 
-  export const getProducts = async (codigo_cliente: number): Promise<Data[]> => {
+  export const getProducts = async (codigo_cliente: string): Promise<Data[]> => {
     console.log('codigo cliente:', codigo_cliente);
     try {
         const response = await apiPyme.get<Data[]>(`/info-perfil`, {

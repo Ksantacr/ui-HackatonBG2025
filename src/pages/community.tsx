@@ -38,6 +38,7 @@ import {
 import { Email, FilterList, FmdGood, LocalHospital, Phone, Search } from "@mui/icons-material"
 import HeroSection from "../components/hero-section"
 import { getPymes } from '../services/pymeServices';
+import { Data } from "../types/data";
 // Datos de ejemplo de pymes en el sector médico
 /*const pymesMedicas = [
   {
@@ -191,34 +192,172 @@ export default function Community() {
   const itemsPerPage = 6
   const [selectedPymesData, setSelectedPymesData] = useState<Data[]>([]);
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    console.log('apiUrl',apiUrl);
-    const fetchData = async () => {
-      try {
-        const data = await getPymes();
-        console.log('data',data.data)
-        setSelectedPymesData(data.data);
-      } catch (error) {
-        console.error("Error fetching pymes data:", error);
-      }
-    };
 
-    fetchData();
+    let transformedData: Data[] = [
+      {
+        info: {
+          idCliente: 156464,
+          nombre: "Contoso S.A.",
+          ruc: "",
+          descripcion: "Descripción de la empresa.",
+          logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVJtBus7afumof5kfZW27n62LkUN-wdvoakA&s",
+          categoria: "Medicina",
+          calificacion: 4.5,
+          contactabilidad: {
+            pais: "Ecuador",
+            ciudad: "Guayaquil",
+            provincia: "Guayas",
+            calle_principal: "Av. 9 de Octubre",
+            calle_secundaria: "Av. Malecon",
+            numero: "123",
+            referencia: "Frente al parque central",
+            latitud: -2.1894,
+            longitud: -79.8891,
+            email1: "contacto@contoso.com",
+            email2: "soporte@contoso.com",
+            telefono1: "+593987654321",
+            telefono2: "+593123456789"
+          }
+        },
+        productos: [
+          {
+            idProducto: "P001",
+            nombre: "Producto A",
+            precio: 25.99,
+            stock: 100,
+            descripcion: "Un producto de alta calidad.",
+            categoria: "Medicina"
+          },
+          {
+            idProducto: "P002",
+            nombre: "Producto B",
+            precio: 15.49,
+            stock: 50,
+            descripcion: "Otro producto de excelente rendimiento.",
+            categoria: "Medicina"
+          }
+        ]
+      },
+      {
+        info: {
+          idCliente: 789123,
+          nombre: "FarmaCorp Ltda.",
+          ruc: "1234567890",
+          descripcion: "Proveedor líder en insumos médicos.",
+          logo: "https://cdn.prod.website-files.com/62a85c75feb9bdf4905f9f24/66f568a04cf5275fd7481aef_668f809f2232881730d50130_hero.jpeg",
+          categoria: "Salud",
+          calificacion: 4.8,
+          contactabilidad: {
+            pais: "Perú",
+            ciudad: "Lima",
+            provincia: "Lima",
+            calle_principal: "Av. Javier Prado",
+            calle_secundaria: "Calle Las Begonias",
+            numero: "456",
+            referencia: "Cerca del centro financiero",
+            latitud: -12.0977,
+            longitud: -77.0297,
+            email1: "ventas@farmacorp.com",
+            email2: "info@farmacorp.com",
+            telefono1: "+51123456789",
+            telefono2: "+51198765432"
+          }
+        },
+        productos: [
+          {
+            idProducto: "P003",
+            nombre: "Producto C",
+            precio: 35.75,
+            stock: 200,
+            descripcion: "Producto innovador para la salud.",
+            categoria: "Salud"
+          },
+          {
+            idProducto: "P004",
+            nombre: "Producto D",
+            precio: 20.99,
+            stock: 80,
+            descripcion: "Producto confiable y eficiente.",
+            categoria: "Salud"
+          }
+        ]
+      },
+      {
+        info: {
+          idCliente: 156469,
+          nombre: "TravelEcuador S.A.",
+          ruc: "",
+          descripcion: "Empresa de turismo en Ecuador",
+          logo: "https://img.goraymi.com/2021/06/29/892be3651314ca15cd17b6480f0fd3ae_xl.jpg",
+          categoria: "Turismo",
+          calificacion: 4.5,
+          contactabilidad: {
+            pais: "Ecuador",
+            ciudad: "Quito",
+            provincia: "Pichincha",
+            calle_principal: "Av. Amazonas",
+            calle_secundaria: "Av. Nayon",
+            numero: "123",
+            referencia: "Frente al parque central",
+            latitud: -2.1894,
+            longitud: -79.8891,
+            email1: "contacto@contoso.com",
+            email2: "soporte@contoso.com",
+            telefono1: "+593987654321",
+            telefono2: "+593123456789"
+          }
+        },
+        productos: [
+          {
+            idProducto: "P001",
+            nombre: "Producto A",
+            precio: 25.99,
+            stock: 100,
+            descripcion: "Un producto de alta calidad.",
+            categoria: "Medicina"
+          },
+          {
+            idProducto: "P002",
+            nombre: "Producto B",
+            precio: 15.49,
+            stock: 50,
+            descripcion: "Otro producto de excelente rendimiento.",
+            categoria: "Medicina"
+          }
+        ]
+      },
+    ];
+
+    setSelectedPymesData(transformedData);
+
+    // const apiUrl = "https://9887-181-198-17-31.ngrok-free.app/";
+    // console.log('apiUrl',apiUrl);
+    // const fetchData = async () => {
+    //   try {
+    //     const data = await getPymes();
+    //     console.log('data',data)
+    //     setSelectedPymesData(data);
+    //   } catch (error) {
+    //     console.error("Error fetching pymes data:", error);
+    //   }
+    // };
+
+    // fetchData();
   }, []);
-  
+
 
   const filteredPymes = selectedPymesData.filter((pyme) => {
     const matchesSearch =
-      pyme.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pyme.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      (pyme.ubicacion ? pyme.ubicacion.pais.toLowerCase().includes(searchTerm.toLowerCase()) : false); // Verifica si ubicacion existe
-  
-    const matchesEspecialidad =
-      especialidadFilter === "" || (pyme.especialidad && pyme.especialidad === especialidadFilter); // Verifica si especialidad existe
-  
-    return matchesSearch && matchesEspecialidad;
+      pyme.info.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pyme.info.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (pyme.info.contactabilidad.provincia ? pyme.info.contactabilidad.pais.toLowerCase().includes(searchTerm.toLowerCase()) : false); // Verifica si ubicacion existe
+
+    // const matchesEspecialidad =
+    //   especialidadFilter === "" || (pyme.especialidad && pyme.especialidad === especialidadFilter); // Verifica si especialidad existe
+
+    return matchesSearch; //&& matchesEspecialidad;
   });
-  
+
   // Paginación
   const totalPages = Math.ceil(filteredPymes.length / itemsPerPage);
   const paginatedPymes = filteredPymes.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -236,8 +375,8 @@ export default function Community() {
   const handleContactClick = (pyme) => {
     console.log('a pyme details',pyme);
     setSelectedPyme(pyme)
-    navigate(`/pyme-details/${pyme.id_Cliente}`); 
-    //navigate(`/pyme-details`); 
+    navigate(`/pyme-details/${pyme.idCliente}`);
+    //navigate(`/pyme-details`);
   }
 
   const handleCloseDialog = () => {
@@ -250,10 +389,10 @@ export default function Community() {
   }
   const navigate = useNavigate();
 
-  
+
 
   return (
-    
+
     <Container maxWidth="lg" sx={{ py: 4 }}>
        <HeroSection
         title="Comunidad de Pymes"
@@ -301,7 +440,7 @@ export default function Community() {
       />
       <Box sx={{ mb: 4 , py:4 }}>
         <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
-          Comunidad Pymes 
+          Comunidad Pymes
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Encuentra y contacta con pequeñas y medianas empresas de cualquier sector
@@ -343,11 +482,11 @@ export default function Community() {
                 }
               >
                 <MenuItem value="">Todas las especialidades</MenuItem>
-                {selectedPymesData.map((especialidad) => (
-                  <MenuItem key={especialidad} value={especialidad}>
+                {/* {selectedPymesData.map((especialidad) => (
+                  <MenuItem key={especialidad} value={especialidad} >
                     {especialidad}
                   </MenuItem>
-                ))}
+                ))} */}
               </Select>
             </FormControl>
           </Grid>
@@ -358,7 +497,7 @@ export default function Community() {
         <>
           <Grid container spacing={3}>
             {paginatedPymes.map((pyme) => (
-              <Grid item xs={12} sm={6} md={4} key={pyme.id}>
+              <Grid item xs={12} sm={6} md={4} key={pyme.info.idCliente}>
                 <Card
                   sx={{
                     height: "100%",
@@ -371,25 +510,26 @@ export default function Community() {
                     },
                   }}
                 >
-                  <CardMedia component="img" height="160" image={pyme.logo} alt={pyme.nombre} />
+                  <CardMedia component="img" height="160" image={pyme.info.logo} alt={pyme.info.nombre} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h6" component="div">
-                    {pyme.nombre}
+                    {pyme.info.nombre}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <LocalHospital fontSize="small" color="primary" sx={{ mr: 1 }} />
                       <Typography variant="body2" color="text.secondary">
-                        {pyme.rubro} - {pyme.especialidad}
+                        {/* {pyme.info.rubro} - {pyme.especialidad} */}
+                        Rubro - Especialidad
                       </Typography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                       <FmdGood fontSize="small" color="action" sx={{ mr: 1 }} />
                       <Typography variant="body2" color="text.secondary">
-                      {pyme.ubicacion.ciudad}, {pyme.ubicacion.provincia}, {pyme.ubicacion.pais}
+                      {pyme.info.contactabilidad.ciudad}, {pyme.info.contactabilidad.provincia}, {pyme.info.contactabilidad.pais}
                       </Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                      {pyme.descripcion.length > 100 ? `${pyme.descripcion.substring(0, 100)}...` : pyme.descripcion}
+                      {pyme.info.descripcion.length > 100 ? `${pyme.info.descripcion.substring(0, 100)}...` : pyme.info.descripcion}
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "space-between", alignSelf:"center", p: 2, pt: 0 }}>

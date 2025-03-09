@@ -1,6 +1,6 @@
 import axios from "axios";
-//const apiUrlMain = process.env.REACT_APP_URL_MAIN;
-const apiUrlMain = "https://localhost:44395"
+const apiUrlMain = "https://9887-181-198-17-31.ngrok-free.app/";
+//const apiUrlMain = "https://localhost:44395"
 const apiPyme= axios.create({
   baseURL: apiUrlMain,
   headers: {

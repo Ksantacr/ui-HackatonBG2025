@@ -40,6 +40,7 @@ import {
 } from "@mui/icons-material";
 import { getProducts } from '../services/productServices';
 import { useParams } from "react-router-dom";
+import { Data } from "../types/data";
 
 // Datos de ejemplo de pymes en el sector médico (extendido con más información)
 const pymesMedicas = [
@@ -350,21 +351,21 @@ export default function PymeDetail() {
         productosPorPyme[pymeId1 as keyof typeof productosPorPyme] || [];
       setProductos(productosEncontrados);
     }*/
-      const pymeEncontrada = selectedPymesData.data; // No es un array, solo un objeto
+      const pymeEncontrada = selectedPymesData[0]; // No es un array, solo un objeto
       console.log('pymeEncontrada',pymeEncontrada)
 
-      if (!pymeEncontrada || pymeEncontrada.id !== 1123) {
+      if (!pymeEncontrada || pymeEncontrada.info.idCliente !== 1123) {
         console.error("No se encontró la PyME con el ID especificado.");
       } else {
         console.log("PyME encontrada:", pymeEncontrada);
         setPyme(pymeEncontrada);
-      
+
         // Acceder a productos directamente desde el objeto
         const productosEncontrados = pymeEncontrada.productos || [];
         console.log("Productos encontrados:", productosEncontrados);
         setProductos(productosEncontrados);
       }
-  }, [selectedPymesData]); 
+  }, [selectedPymesData]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
